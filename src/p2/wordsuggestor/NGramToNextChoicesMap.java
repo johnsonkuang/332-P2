@@ -1,6 +1,7 @@
 package p2.wordsuggestor;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.function.Supplier;
 
 import cse332.datastructures.containers.Item;
@@ -12,8 +13,8 @@ import cse332.types.AlphabeticString;
 import cse332.types.NGram;
 
 public class NGramToNextChoicesMap {
-    private final Dictionary<NGram, Dictionary<AlphabeticString, Integer>> map;
-    private final Supplier<Dictionary<AlphabeticString, Integer>> newInner;
+    private final Dictionary<NGram, Dictionary<AlphabeticString, Integer>> map; // outer map
+    private final Supplier<Dictionary<AlphabeticString, Integer>> newInner; // inner map
 
     public NGramToNextChoicesMap(
             Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> newOuter,
@@ -26,7 +27,23 @@ public class NGramToNextChoicesMap {
      * Increments the count of word after the particular NGram ngram.
      */
     public void seenWordAfterNGram(NGram ngram, String word) {
-        throw new NotYetImplementedException();
+        // check if ngram is in outer map
+        if(map.find(ngram) == null) {
+            map.insert(ngram, newInner.get());
+        }
+        // get reference to inner map for this ngram
+        Dictionary<AlphabeticString, Integer> innerMapRef = map.find(ngram);
+
+        // convert word to alphabetic word
+        AlphabeticString alphabeticWord = new AlphabeticString(word);
+
+        // check that word is in the map
+        if(innerMapRef.find(alphabeticWord) == null) {
+            // if not, create new mapping at 0
+            innerMapRef.insert(alphabeticWord, 0);
+        }
+        // increment occurrences
+        innerMapRef.insert(alphabeticWord, innerMapRef.find(alphabeticWord) + 1);
     }
 
     /**
@@ -39,7 +56,25 @@ public class NGramToNextChoicesMap {
      * @return An array of all the Items for the requested ngram.
      */
     public Item<String, Integer>[] getCountsAfter(NGram ngram) {
-        throw new NotYetImplementedException();
+        // get reference to map for this ngram
+        Dictionary<AlphabeticString, Integer> outerRef = map.find(ngram);
+
+        // create empty array
+        Item<String, Integer>[] countsArr = (Item<String, Integer>[]) new Object[outerRef.size()];
+
+        // get iterator for inner map
+        Iterator<Item<AlphabeticString, Integer>> innerIterator = outerRef.iterator();
+        int i = 0;
+        while(innerIterator.hasNext()) {
+            // store item from iterator
+            Item<AlphabeticString, Integer> itemRef = innerIterator.next();
+            // create string key of item's alphabeticString key
+            String key = itemRef.key.toString();
+            // create new Item with string key
+            countsArr[i] = new Item<>(key, itemRef.value);
+            i++;
+        }
+        return countsArr;
     }
 
     public String[] getWordsAfter(NGram ngram, int k) {
