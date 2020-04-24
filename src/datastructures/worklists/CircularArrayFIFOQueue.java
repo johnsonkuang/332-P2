@@ -3,6 +3,7 @@ package datastructures.worklists;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -94,7 +95,9 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
     @Override
     public int compareTo(FixedSizeFIFOWorkList<E> other) {
         // You will implement this method in project 2. Leave this method unchanged for project 1.
-        throw new NotYetImplementedException();
+        // subtract hashCodes to get the correct sign, divide by abs value to get a reasonable
+        // number
+        return other.hashCode() - this.hashCode() / Math.abs(other.hashCode() - this.hashCode());
     }
 
     @Override
@@ -109,17 +112,38 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
         }
         else {
             // Uncomment the line below for p2 when you implement equals
-            // FixedSizeFIFOWorkList<E> other = (FixedSizeFIFOWorkList<E>) obj;
+            FixedSizeFIFOWorkList<E> other = (FixedSizeFIFOWorkList<E>) obj;
 
             // Your code goes here
+            // first, verify sizes are equal
+            if(this.size != other.size()) {
+                return false;
+            }
 
-            throw new NotYetImplementedException();
+            // use iterator to get elements of other object
+            Iterator<E> otherIterator = other.iterator();
+            for(int i = 0; i < this.size; i++) {
+                // get the other object's next element
+                E otherElt = otherIterator.next();
+                // if any corresponding elements are different, return false
+                if(this.queue[(this.head + i) % capacity()].compareTo(otherElt) != 0) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 
     @Override
     public int hashCode() {
         // You will implement this method in project 2. Leave this method unchanged for project 1.
-        throw new NotYetImplementedException();
+        int sum = 0;
+        // add all elts
+        for(E elt : this.queue) {
+            sum += elt.hashCode();
+        }
+        // multiply by 31 because we can >:)
+        sum *= 31;
+        return sum;
     }
 }
