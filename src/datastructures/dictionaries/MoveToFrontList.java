@@ -21,18 +21,65 @@ import cse332.interfaces.misc.DeletelessDictionary;
  *    dictionary/list's iterator. 
  */
 public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
+
+    MVFNode front;
+
+    public MoveToFrontList() {
+        front = null;
+    }
+
     @Override
     public V insert(K key, V value) {
-        throw new NotYetImplementedException();
+        // if key was not found
+        if(find(key) == null) {
+            // create new node and set it to the front
+            MVFNode newNode = new MVFNode(key, value);
+            newNode.next = front;
+            front = newNode;
+            return front.value;
+        }
+        // existing node has been moved to front via find()
+        // store old value
+        V oldValue = front.value;
+        front.value = value;
+        return oldValue;
     }
 
     @Override
     public V find(K key) {
-        throw new NotYetImplementedException();
+        if(front.key.equals(key)) {
+            // check if front.key equals key
+            return front.value;
+        }
+        MVFNode curr = front;
+        while(curr.next != null) {
+            if(curr.next.key.equals(key)) {
+                // found key in curr.next
+                MVFNode temp = curr.next;
+                // link curr to curr.next.next
+                curr.next = curr.next.next;
+                // link temp to front
+                temp.next = front;
+                front = temp;
+                return front.value;
+            }
+        }
+        return null;
     }
 
     @Override
     public Iterator<Item<K, V>> iterator() {
         throw new NotYetImplementedException();
+    }
+
+    private class MVFNode {
+        public K key;
+        public V value;
+        public MVFNode next;
+
+        public MVFNode(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 }
