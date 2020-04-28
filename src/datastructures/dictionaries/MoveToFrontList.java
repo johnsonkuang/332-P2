@@ -5,6 +5,7 @@ import java.util.Iterator;
 import cse332.datastructures.containers.*;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.DeletelessDictionary;
+import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
 /**
  * TODO: Replace this comment with your own as appropriate.
@@ -69,7 +70,23 @@ public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
 
     @Override
     public Iterator<Item<K, V>> iterator() {
-        throw new NotYetImplementedException();
+        return new MoveToFrontListIterator();
+    }
+
+    private class MoveToFrontListIterator implements Iterator<Item<K, V>> {
+        MVFNode curr = MoveToFrontList.this.front;
+
+        @Override
+        public boolean hasNext() {
+            return this.curr.next != null;
+        }
+
+        @Override
+        public Item<K, V> next() {
+            Item<K, V> returnNode = new Item<>(curr.key, curr.value);
+            curr = curr.next;
+            return returnNode;
+        }
     }
 
     private class MVFNode {

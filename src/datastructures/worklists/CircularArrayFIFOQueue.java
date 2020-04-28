@@ -138,12 +138,14 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
     public int hashCode() {
         // You will implement this method in project 2. Leave this method unchanged for project 1.
         int sum = 0;
-        // add all elts
-        for(E elt : this.queue) {
-            sum += elt.hashCode();
+        // add all elt
+        int idx = 0;
+        while(idx != size){
+            // multiply by index to factor in position
+            sum += this.queue[(head + idx) % this.capacity()].hashCode() * (idx + 1);
         }
-        // multiply by 31 because we can >:)
-        sum *= 31;
+        // we've ascended, so we choose a prime
+        sum %= 31;
         return sum;
     }
 }
