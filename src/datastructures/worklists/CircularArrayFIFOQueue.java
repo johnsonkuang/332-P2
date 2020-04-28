@@ -97,7 +97,26 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
         // You will implement this method in project 2. Leave this method unchanged for project 1.
         // subtract hashCodes to get the correct sign, divide by abs value to get a reasonable
         // number
-        return other.hashCode() - this.hashCode() / Math.abs(other.hashCode() - this.hashCode());
+
+        // use iterator to get elements of other object
+        // use iterator to get elements of other object
+        Iterator<E> otherIterator = other.iterator();
+        for(int i = 0; i < this.size; i++) {
+            // get the other object's next element
+            E otherElt = otherIterator.next();
+            // if any corresponding elements are different, return false
+            if(this.queue[(this.head + i) % capacity()].compareTo(otherElt) != 0) {
+                return this.queue[(this.head + i) % capacity()].compareTo(otherElt);
+            }
+
+            if(!otherIterator.hasNext() && i != this.size - 1){
+                return 1;
+            }
+        }
+        if(otherIterator.hasNext()){
+            return -1;
+        }
+        return 0;
     }
 
     @Override
