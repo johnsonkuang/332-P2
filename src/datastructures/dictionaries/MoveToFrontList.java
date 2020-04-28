@@ -27,17 +27,21 @@ public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
 
     public MoveToFrontList() {
         front = null;
+        size = 0;
     }
 
     @Override
     public V insert(K key, V value) {
+        if(key == null || value == null){
+            throw new IllegalArgumentException();
+        }
+
         // if key was not found
         if(find(key) == null) {
             // create new node and set it to the front
-            MVFNode newNode = new MVFNode(key, value);
-            newNode.next = front;
-            front = newNode;
-            return front.value;
+            front = new MVFNode(key, value, front);
+            size++;
+            return null;
         }
         // existing node has been moved to front via find()
         // store old value
@@ -48,6 +52,14 @@ public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
 
     @Override
     public V find(K key) {
+        if(key == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if(front == null){
+            return null;
+        }
+
         if(front.key.equals(key)) {
             // check if front.key equals key
             return front.value;
@@ -64,6 +76,7 @@ public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
                 front = temp;
                 return front.value;
             }
+            curr = curr.next;
         }
         return null;
     }
@@ -78,7 +91,7 @@ public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
 
         @Override
         public boolean hasNext() {
-            return this.curr.next != null;
+            return this.curr != null;
         }
 
         @Override
@@ -95,8 +108,13 @@ public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
         public MVFNode next;
 
         public MVFNode(K key, V value) {
+            this(key, value, null);
+        }
+
+        public MVFNode(K key, V value, MVFNode next){
             this.key = key;
             this.value = value;
+            this.next = next;
         }
     }
 }
