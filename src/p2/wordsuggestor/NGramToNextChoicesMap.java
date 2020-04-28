@@ -59,8 +59,12 @@ public class NGramToNextChoicesMap {
         // get reference to map for this ngram
         Dictionary<AlphabeticString, Integer> outerRef = map.find(ngram);
 
+        if(outerRef == null) {
+            return (Item<String, Integer>[]) new Item[0];
+        }
+
         // create empty array
-        Item<String, Integer>[] countsArr = (Item<String, Integer>[]) new Object[outerRef.size()];
+        Item<String, Integer>[] countsArr = (Item<String, Integer>[]) new Item[outerRef.size()];
 
         // get iterator for inner map
         Iterator<Item<AlphabeticString, Integer>> innerIterator = outerRef.iterator();
