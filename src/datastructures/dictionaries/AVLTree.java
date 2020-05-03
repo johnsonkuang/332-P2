@@ -54,11 +54,12 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
         //insert, recurse to the bottom of the tree
         if(node == null) {
             current = new AVLNode(key, null);
+            size++;
             return current;
         } else if(key.compareTo(node.key) > 0){
-            node.castChildrenToAVL()[1] = insertFind(key, node.castChildrenToAVL()[1]);
+            node.children[1] = insertFind(key, node.castChildrenToAVL(1));
         } else if(key.compareTo(node.key) < 0){
-            node.castChildrenToAVL()[0] = insertFind(key, node.castChildrenToAVL()[0]);
+            node.children[0] = insertFind(key, node.castChildrenToAVL(0));
         } else {
             current = node;
             return current;
@@ -72,13 +73,13 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
     }
 
     private void updateHeight(AVLNode node){
-        node.height = 1 + Math.max(getHeight(node.castChildrenToAVL()[0]),
-                                   getHeight(node.castChildrenToAVL()[1]));
+        node.height = 1 + Math.max(getHeight(node.castChildrenToAVL(0)),
+                                   getHeight(node.castChildrenToAVL(1)));
     }
 
     private int getBalance(AVLNode node){
         return (node == null) ? 0 :
-                getHeight(node.castChildrenToAVL()[0]) - getHeight(node.castChildrenToAVL()[1]);
+                getHeight(node.castChildrenToAVL(0)) - getHeight(node.castChildrenToAVL(1));
     }
 
     private AVLNode balanceTree(AVLNode node){
@@ -86,15 +87,15 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
 
         int balVal = getBalance(node);
         if(balVal > 1) {                        // go left first
-            int leftBalVal = getBalance(node.castChildrenToAVL()[0]);
+            int leftBalVal = getBalance(node.castChildrenToAVL(0));
             if(leftBalVal < 0) {                // left-right => double rot
-                node.castChildrenToAVL()[0] = rotate(node.castChildrenToAVL()[0], false);
+                node.children[0] = rotate(node.castChildrenToAVL(0), false);
             }                                   // rot for single and double rot
             node = rotate(node, true);
         } else if(balVal < -1) {                // go right first
-            int rightBalVal = getBalance(node.castChildrenToAVL()[1]);
+            int rightBalVal = getBalance(node.castChildrenToAVL(1));
             if(rightBalVal > 0) {                // right-left => double rot
-                node.castChildrenToAVL()[1] = rotate(node.castChildrenToAVL()[1], true);
+                node.children[1] = rotate(node.castChildrenToAVL(1), true);
             }                                   // rot for single and double rot
             node = rotate(node, false);
         }
@@ -104,11 +105,11 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
 
     public AVLNode rotate (AVLNode parent, boolean isRight) {
         // For rotate right (opp. for rotate left): ref to left child
-        AVLNode temp = parent.castChildrenToAVL()[isRight ? 0 : 1];
+        AVLNode temp = parent.castChildrenToAVL(isRight ? 0 : 1);
         // For rotate right (opp. for rotate left): set parent left ref to left child's right child
-        parent.castChildrenToAVL()[isRight ? 0 : 1] = temp.castChildrenToAVL()[isRight ? 1 : 0];
+        parent.children[isRight ? 0 : 1] = temp.castChildrenToAVL(isRight ? 1 : 0);
         // For rotate right (opp. for rotate left): set child's right to parent (child has moved up)
-        temp.castChildrenToAVL()[isRight? 1 : 0] = parent;
+        temp.children[isRight? 1 : 0] = parent;
 
         // update heights
         updateHeight(parent);
@@ -124,54 +125,11 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
 
         public AVLNode(K key, V value){
             super(key, value);
+            height = 0;
         }
 
-        public AVLNode[] castChildrenToAVL () {
-            return (AVLNode[]) this.children;
+        public AVLNode castChildrenToAVL (int childIndex) {
+            return (AVLNode) this.children[childIndex];
         }
-    }
-
-    private boolean verifyAVL(AVLNode node) {
-        return verifyBST(node, Integer.MIN_VALUE, Integer.MAX_VALUE)
-                && verifyAVLBalance(node);
-    }
-
-    private boolean verifyBST(AVLNode node, int min, int max){
-        //if we make it to the leaf, all conditions have been met
-        if(node == null) return true;
-        //checks BST property
-        if (node.key < min || node.key > max) return false;
-
-        return (verifyBST(node.left, min, node.key-1) &&
-                verifyBST(node.right, node.key, max));
-    }
-
-
-    //return true if balance conditions are met and height information matches
-    private boolean verifyAVLBalance(AVLNode node) {
-        if(node == null){
-            return true;
-        }
-
-        int rightHeight = height(node.right);
-        int leftHeight = height(node.left);
-
-        if(Math.abs(rightHeight - leftHeight) <= 1 &&
-                verifyAVLBalance(node.right) &&
-                verifyAVLBalance(node.left) &&
-                Math.max(rightHeight, leftHeight) + 1 == node.height){
-            return true;
-        }
-
-        return false;
-    }
-
-    //simple method to calculate the height of a node
-    private int height(AVLNode node){
-        if(node == null){
-            return -1;
-        }
-
-        return Math.max(height(node.castChildrenToAVL()[0]), height(node.castChildrenToAVL()[1])) + 1;
     }
 }
