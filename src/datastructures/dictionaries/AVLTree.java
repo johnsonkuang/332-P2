@@ -32,6 +32,8 @@ import java.lang.reflect.Array;
 
 public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTree<K, V>  {
 
+    private AVLNode current;
+
     public AVLTree(){
         super();
     }
@@ -42,7 +44,7 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
             throw new IllegalArgumentException();
         }
 
-        AVLNode current = insertFind(key, (AVLNode) this.root);
+        this.root = insertFind(key, (AVLNode) this.root);
         V oldValue = current.value;
         current.value = value;
         return oldValue;
@@ -51,15 +53,17 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
     private AVLNode insertFind(K key, AVLNode node){
         //insert, recurse to the bottom of the tree
         if(node == null) {
-            return new AVLNode(key, null);
+            current = new AVLNode(key, null);
+            return current;
         } else if(key.compareTo(node.key) > 0){
             node.castChildrenToAVL()[1] = insertFind(key, node.castChildrenToAVL()[1]);
         } else if(key.compareTo(node.key) < 0){
             node.castChildrenToAVL()[0] = insertFind(key, node.castChildrenToAVL()[0]);
         } else {
-            return node;
+            current = node;
+            return current;
         }
-        // rebalance: will perform rotation and update height
+        // rebalance: perform rotation and update height
         return balanceTree(node);
     }
 
@@ -80,10 +84,37 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
     private AVLNode balanceTree(AVLNode node){
         updateHeight(node);
 
-        //left ?
-        if(getBalance(node) > 1) {
-
+        int balVal = getBalance(node);
+        if(balVal > 1) {                        // go left first
+            int leftBalVal = getBalance(node.castChildrenToAVL()[0]);
+            if(leftBalVal < 0) {                // left-right => double rot
+                node.castChildrenToAVL()[0] = rotate(node.castChildrenToAVL()[0], false);
+            }                                   // rot for single and double rot
+            node = rotate(node, true);
+        } else if(balVal < -1) {                // go right first
+            int rightBalVal = getBalance(node.castChildrenToAVL()[1]);
+            if(rightBalVal > 0) {                // right-left => double rot
+                node.castChildrenToAVL()[1] = rotate(node.castChildrenToAVL()[1], true);
+            }                                   // rot for single and double rot
+            node = rotate(node, false);
         }
+
+        return node;
+    }
+
+    public AVLNode rotate (AVLNode parent, boolean isRight) {
+        // For rotate right (opp. for rotate left): ref to left child
+        AVLNode temp = parent.castChildrenToAVL()[isRight ? 0 : 1];
+        // For rotate right (opp. for rotate left): set parent left ref to left child's right child
+        parent.castChildrenToAVL()[isRight ? 0 : 1] = temp.castChildrenToAVL()[isRight ? 1 : 0];
+        // For rotate right (opp. for rotate left): set child's right to parent (child has moved up)
+        temp.castChildrenToAVL()[isRight? 1 : 0] = parent;
+
+        // update heights
+        updateHeight(parent);
+        updateHeight(temp);
+
+        return temp;
     }
 
     //TODO: rotateLeft, Right, Double Rotate, insert (will have find)
