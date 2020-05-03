@@ -2,6 +2,8 @@ package datastructures.dictionaries;
 
 import cse332.datastructures.trees.BinarySearchTree;
 
+import java.lang.reflect.Array;
+
 /**
  * TODO: Replace this comment with your own as appropriate.
  *
@@ -29,5 +31,116 @@ import cse332.datastructures.trees.BinarySearchTree;
  */
 
 public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTree<K, V>  {
-    // TODO: Implement me!
+
+    public AVLTree(){
+        super();
+    }
+
+    @Override
+    public V insert(K key, V value) {
+        if(key == null || value == null) {
+            throw new IllegalArgumentException();
+        }
+
+        AVLNode current = insertFind(key, (AVLNode) this.root);
+        V oldValue = current.value;
+        current.value = value;
+        return oldValue;
+    }
+
+    private AVLNode insertFind(K key, AVLNode node){
+        //insert, recurse to the bottom of the tree
+        if(node == null) {
+            return new AVLNode(key, null);
+        } else if(key.compareTo(node.key) > 0){
+            node.castChildrenToAVL()[1] = insertFind(key, node.castChildrenToAVL()[1]);
+        } else if(key.compareTo(node.key) < 0){
+            node.castChildrenToAVL()[0] = insertFind(key, node.castChildrenToAVL()[0]);
+        } else {
+            return node;
+        }
+        // rebalance: will perform rotation and update height
+        return balanceTree(node);
+    }
+
+    private int getHeight(AVLNode node){
+        return node == null ? -1 : node.height;
+    }
+
+    private void updateHeight(AVLNode node){
+        node.height = 1 + Math.max(getHeight(node.castChildrenToAVL()[0]),
+                                   getHeight(node.castChildrenToAVL()[1]));
+    }
+
+    private int getBalance(AVLNode node){
+        return (node == null) ? 0 :
+                getHeight(node.castChildrenToAVL()[0]) - getHeight(node.castChildrenToAVL()[1]);
+    }
+
+    private AVLNode balanceTree(AVLNode node){
+        updateHeight(node);
+
+        //left ?
+        if(getBalance(node) > 1) {
+
+        }
+    }
+
+    //TODO: rotateLeft, Right, Double Rotate, insert (will have find)
+
+    private class AVLNode extends BSTNode{
+        public int height;
+
+        public AVLNode(K key, V value){
+            super(key, value);
+        }
+
+        public AVLNode[] castChildrenToAVL () {
+            return (AVLNode[]) this.children;
+        }
+    }
+
+    private boolean verifyAVL(AVLNode node) {
+        return verifyBST(node, Integer.MIN_VALUE, Integer.MAX_VALUE)
+                && verifyAVLBalance(node);
+    }
+
+    private boolean verifyBST(AVLNode node, int min, int max){
+        //if we make it to the leaf, all conditions have been met
+        if(node == null) return true;
+        //checks BST property
+        if (node.key < min || node.key > max) return false;
+
+        return (verifyBST(node.left, min, node.key-1) &&
+                verifyBST(node.right, node.key, max));
+    }
+
+
+    //return true if balance conditions are met and height information matches
+    private boolean verifyAVLBalance(AVLNode node) {
+        if(node == null){
+            return true;
+        }
+
+        int rightHeight = height(node.right);
+        int leftHeight = height(node.left);
+
+        if(Math.abs(rightHeight - leftHeight) <= 1 &&
+                verifyAVLBalance(node.right) &&
+                verifyAVLBalance(node.left) &&
+                Math.max(rightHeight, leftHeight) + 1 == node.height){
+            return true;
+        }
+
+        return false;
+    }
+
+    //simple method to calculate the height of a node
+    private int height(AVLNode node){
+        if(node == null){
+            return -1;
+        }
+
+        return Math.max(height(node.castChildrenToAVL()[0]), height(node.castChildrenToAVL()[1])) + 1;
+    }
 }
