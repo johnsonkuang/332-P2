@@ -29,7 +29,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
     private Supplier<Dictionary<K, V>> newChain;
 
     public static final int initSize = 61;
-    public static final int[] PRIMES = {};
+    public static final int[] NEXT_PRIMES = {127, 251, 503, 1009, 2011, 4027, 8053, 16111, 32261, 65003, 130099, 200003};
 
     private Dictionary<K, V>[] hashTable;
 
