@@ -161,6 +161,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         public Item<K, V> next() {
             // if current dict iterator empty, use index to search for next iterator
             if(!dictItr.hasNext()) {
+                hashTableIndex++;
                 dictItr = getNextIterator();
             }
             itemsSeen++;
