@@ -100,10 +100,12 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
                 (Dictionary<K, V>[]) new Dictionary[nextTableSize];
 
         for(Dictionary<K, V> chains : hashTable) {
-            Iterator<Item<K, V>> dictIterator = chains.iterator();
-            while(dictIterator.hasNext()) {
-                Item<K, V> item = iterator().next();
-                hashInsert(item.key, item.value, newHashTable);
+            if(chains != null) {
+                Iterator<Item<K, V>> dictIterator = chains.iterator();
+                while (dictIterator.hasNext()) {
+                    Item<K, V> item = dictIterator.next();
+                    hashInsert(item.key, item.value, newHashTable);
+                }
             }
         }
         hashTable = newHashTable;
@@ -115,7 +117,10 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
             throw new IllegalArgumentException();
         }
         int hashIndex = getHashIndex(key, hashTable.length);
-        return hashTable[hashIndex].find(key);
+        if(hashTable[hashIndex] != null) {
+            return hashTable[hashIndex].find(key);
+        }
+        return null;
     }
 
     @Override
@@ -128,15 +133,40 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
 
     private class ChainingHashTableIterator implements Iterator<Item<K, V>> {
         Item<K, V> curr;
+        private int hashTableIndex = 0;
+        private int itemsSeen = 0;
+        private Iterator<Item<K, V>> dictItr;
+
+        public ChainingHashTableIterator() {
+            dictItr = getNextIterator();
+        }
+
+        private Iterator<Item<K, V>> getNextIterator() {
+            // loop through hashTable until dict (with iterator) is found
+            while(hashTableIndex < ChainingHashTable.this.hashTable.length &&
+                  ChainingHashTable.this.hashTable[hashTableIndex] == null){
+                hashTableIndex++;
+            }
+            if(hashTableIndex == ChainingHashTable.this.hashTable.length){
+                throw new IndexOutOfBoundsException();
+            }
+            //invariant: hashTableIndex points to the index of the first dictionary in the hashtable
+            return ChainingHashTable.this.hashTable[hashTableIndex].iterator();
+        }
 
         @Override
         public boolean hasNext() {
-            return false;
+            return itemsSeen < ChainingHashTable.this.size();
         }
 
         @Override
         public Item<K, V> next() {
-            return null;
+            // if current dict iterator empty, use index to search for next iterator
+            if(!dictItr.hasNext()) {
+                dictItr = getNextIterator();
+            }
+            itemsSeen++;
+            return dictItr.next();
         }
     }
 }
