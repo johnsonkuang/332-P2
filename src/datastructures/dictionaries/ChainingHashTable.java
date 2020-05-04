@@ -26,15 +26,25 @@ import cse332.interfaces.misc.Dictionary;
 
  */
 public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
-    private Supplier<Dictionary<K, V>> newChain;  
+    private Supplier<Dictionary<K, V>> newChain;
+
+    public static final int initSize = 61;
+    public static final int[] PRIMES = {};
+
+    private Dictionary<K, V>[] hashTable;
 
     public ChainingHashTable(Supplier<Dictionary<K, V>> newChain) {
         this.newChain = newChain;
+        hashTable = (Dictionary<K, V>[]) new Object[initSize];
     }
 
     @Override
     public V insert(K key, V value) {
-        throw new NotYetImplementedException();
+        // generate key hash
+        int keyHash = key.hashCode();
+        // mod by capacity
+        int keyIndex = keyHash %
+        // insert at index
     }
 
     @Override
