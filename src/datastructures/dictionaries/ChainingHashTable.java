@@ -101,9 +101,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
 
         for(Dictionary<K, V> chains : hashTable) {
             if(chains != null) {
-                Iterator<Item<K, V>> dictIterator = chains.iterator();
-                while (dictIterator.hasNext()) {
-                    Item<K, V> item = dictIterator.next();
+                for(Item<K, V> item : chains) {
                     hashInsert(item.key, item.value, newHashTable);
                 }
             }
