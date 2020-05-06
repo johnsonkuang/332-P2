@@ -14,28 +14,31 @@ public class QuickSort {
     }
 
     private static <E> void quickSort(E[] array, Comparator<E> cmp, int lo, int upper) {
+        // there is more than 1 elt in the range
         if(upper > lo) {
             // get pivot
             int pivotIndex = medianOfThree(array, cmp, lo, upper);
             E pivotVal = array[pivotIndex];
 
             // swap pivot to last place
-            E temp = array[array.length - 1];
-            array[array.length - 1] = pivotVal;
+            E temp = array[upper - 1];
+            array[upper - 1] = pivotVal;
             array[pivotIndex] = temp;
 
             // decrement hi
             int hi = upper - 1;
 
+            // conduct swap search while lo is less than hi
             while (lo < hi) {
                 // find swap values
                 while (cmp.compare(array[lo], pivotVal) < 0 && lo < hi) {
-                    lo++;
+                    lo++; // inc lo to the next value that needs a swap
                 }
                 while (cmp.compare(array[hi], pivotVal) > 0 && lo < hi) {
-                    hi--;
+                    hi--; // inc hi to the next value that needs a swap
                 }
-                if (lo < hi) {
+                if (lo != hi) {         // if equal, don't swap and exit on the next iteration,
+                                        // if not equal, swap and continue
                     // conduct swap
                     E tempHi = array[hi];
                     array[hi] = array[lo];
@@ -44,7 +47,7 @@ public class QuickSort {
             }
 
             // swap pivot back to new lo
-            array[array.length - 1] = array[lo];
+            array[upper - 1] = array[lo];
             array[lo] = pivotVal;
 
             quickSort(array, cmp, 0, pivotIndex - 1);
