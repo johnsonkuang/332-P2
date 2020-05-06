@@ -21,8 +21,8 @@ public class QuickSort {
             E pivotVal = array[pivotIndex];
 
             // swap pivot to last place
-            E temp = array[upper - 1];
-            array[upper - 1] = pivotVal;
+            E temp = array[upper];
+            array[upper] = pivotVal;
             array[pivotIndex] = temp;
 
             // decrement hi
@@ -47,7 +47,7 @@ public class QuickSort {
             }
 
             // swap pivot back to new lo
-            array[upper - 1] = array[lo];
+            array[upper] = array[lo];
             array[lo] = pivotVal;
 
             quickSort(array, cmp, 0, pivotIndex - 1);
