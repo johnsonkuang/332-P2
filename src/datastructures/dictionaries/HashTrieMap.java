@@ -1,12 +1,15 @@
 package datastructures.dictionaries;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cse332.datastructures.containers.Item;
 import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.BString;
+import cse332.interfaces.misc.Dictionary;
 import cse332.interfaces.trie.TrieMap;
 
 /**
@@ -15,19 +18,38 @@ import cse332.interfaces.trie.TrieMap;
  * for method specifications.
  */
 public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> extends TrieMap<A, K, V> {
-    public class HashTrieNode extends TrieNode<Map<A, HashTrieNode>, HashTrieNode> {
+    public class HashTrieNode extends TrieNode<ChainingHashTable<A, HashTrieNode>, HashTrieNode> {
         public HashTrieNode() {
             this(null);
         }
 
         public HashTrieNode(V value) {
-            this.pointers = new HashMap<A, HashTrieNode>();
+            this.pointers =
+                    new ChainingHashTable<A, HashTrieNode>(() -> new AVLTree<>());
             this.value = value;
         }
 
         @Override
         public Iterator<Entry<A, HashTrieMap<A, K, V>.HashTrieNode>> iterator() {
-            return pointers.entrySet().iterator();
+            return new HashTrieNodeIterator();
+        }
+
+        private class HashTrieNodeIterator implements Iterator<Entry<A,
+                HashTrieMap<A, K, V>.HashTrieNode>>{
+
+            Iterator<Item<A, HashTrieNode>> entryItr =
+                    HashTrieMap.HashTrieNode.this.pointers.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return entryItr.hasNext();
+            }
+
+            @Override
+            public Entry<A, HashTrieNode> next() {
+                Item<A, HashTrieNode> nextItem = entryItr.next();
+                return new AbstractMap.SimpleEntry<>(nextItem.key, nextItem.value);
+            }
         }
     }
 
@@ -76,18 +98,18 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
         HashTrieNode nodeRef = (HashTrieNode) this.root;
         while(keyIterator.hasNext()) {
             A nextChar = keyIterator.next();
-            if(!nodeRef.pointers.containsKey(nextChar)) {
+            if(nodeRef.pointers.find(nextChar) == null) {
                 switch (methodFlag){
                     case find:
                         return null;
                     case findPrefix:
                         return false;
                     case insert:
-                        nodeRef.pointers.put(nextChar, new HashTrieNode());
+                        nodeRef.pointers.insert(nextChar, new HashTrieNode());
                         break;
                 }
             }
-            nodeRef = nodeRef.pointers.get(nextChar);
+            nodeRef = nodeRef.pointers.find(nextChar);
         }
         switch (methodFlag){
             case find:
@@ -103,50 +125,11 @@ public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> exten
 
     @Override
     public void delete(K key) {
-        if(key == null) {
-            throw new IllegalArgumentException();
-        }
-        Iterator<A> keyIterator = key.iterator();
-
-        HashTrieNode nodeRef = (HashTrieNode) this.root;
-
-        // The last node with multiple children and/or a value (highest possible node we can
-        // sever from)
-        HashTrieNode topNode = null;
-        // Keep reference of the next character key from topNode
-        A topChar = null;
-
-        while(keyIterator.hasNext()) {
-            A nextChar = keyIterator.next();
-            if(nodeRef.value != null || nodeRef.pointers.size() > 1) {
-                topNode = nodeRef;
-                topChar = nextChar;
-            }
-            // if there is no connection via the nextChar, stop
-            if(!nodeRef.pointers.containsKey(nextChar)) {
-                return;
-            }
-            // otherwise, continue
-            nodeRef = nodeRef.pointers.get(nextChar);
-        }
-        // if current node value is null, don't do anything (child nodes have a non-null value)
-        if(nodeRef.value != null) {
-            if(nodeRef.pointers.size() > 0) {
-                nodeRef.value = null;
-            } else {
-                if (topNode == null) {
-                    this.root = new HashTrieNode();
-                } else {
-                    topNode.pointers.remove(topChar);
-                }
-            }
-            this.size--;
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void clear() {
-        this.root = new HashTrieNode();
-        this.size = 0;
+        throw new UnsupportedOperationException();
     }
 }

@@ -1,5 +1,6 @@
 package p2.wordcorrector;
 
+import cse332.datastructures.containers.Item;
 import cse332.types.AlphabeticString;
 import datastructures.dictionaries.HashTrieMap;
 
@@ -13,29 +14,30 @@ public class AutocompleteTrie extends HashTrieMap<Character, AlphabeticString, I
         @SuppressWarnings("unchecked")
         HashTrieNode current = (HashTrieNode) this.root;
         for (Character item : key.toCharArray()) {
-            if (!current.pointers.containsKey(item)) {
+            if (current.pointers.find(item) == null) {
                 return null;
             }
             else {
-                current = current.pointers.get(item);
+                current = current.pointers.find(item);
             }
         }
 
-        String result = key;
+        StringBuilder result = new StringBuilder(key);
 
         while (current.pointers.size() == 1) {
             if (current.value != null) {
                 return null;
             }
-            result += current.pointers.keySet().iterator().next();
-            current = current.pointers.values().iterator().next();
+            Item<Character, HashTrieNode> nextItem = current.pointers.iterator().next();
+            result.append(nextItem.key);
+            current = nextItem.value;
         }
 
         // Switch this to return null to only complete if we're at the end of
         // the word
         if (current.pointers.size() != 0) {
-            return result;
+            return result.toString();
         }
-        return result;
+        return result.toString();
     }
 }
