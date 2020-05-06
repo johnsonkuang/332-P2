@@ -3,23 +3,27 @@ package datastructures.worklists;
 import cse332.interfaces.worklists.PriorityWorkList;
 import cse332.exceptions.NotYetImplementedException;
 
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
  * See cse332/interfaces/worklists/PriorityWorkList.java
  * for method specifications.
  */
-public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
+public class MinFourHeap<E> extends PriorityWorkList<E> {
     /* Do not change the name of this field; the tests rely on it to work correctly. */
     private E[] data;
+
+    private Comparator<E> cmp;
 
     private static final int DEFAULT_CAPACITY = 10;
 
     private int size;
 
-    public MinFourHeap() {
-        data = (E[])new Comparable[DEFAULT_CAPACITY];
+    public MinFourHeap(Comparator<E> cmp) {
+        data = (E[])new Object[DEFAULT_CAPACITY];
         size = 0;
+        this.cmp = cmp;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
     @Override
     public void add(E work) {
         if(size > data.length - 1) {
-            E[] data2 = (E[])new Comparable[data.length * 2];
+            E[] data2 = (E[])new Object[data.length * 2];
             // copying all elements into new stack
             for(int i = 0; i < data.length; i++){
                 data2[i] = data[i];
@@ -42,7 +46,7 @@ public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
         int parentIndex = (size - 1) / 4;
         int childIndex = size;
         // while the parent data is greater than the work, percolate work up
-        while(parentIndex >= 0 && work.compareTo(data[parentIndex]) < 0){
+        while(parentIndex >= 0 && cmp.compare(work, data[parentIndex]) < 0){
             data[childIndex] = data[parentIndex];
             data[parentIndex] = work;
             childIndex = parentIndex;
@@ -71,7 +75,7 @@ public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
         int minChildIndex = findMinChildIndex(parentIndex);
         // while the parent data is greater than the child data, percolate down by
         // swapping parent data with the smallest child data
-        while(minChildIndex < size && data[parentIndex].compareTo(data[minChildIndex]) > 0){
+        while(minChildIndex < size && cmp.compare(data[parentIndex], data[minChildIndex]) > 0){
             E temp = data[parentIndex];
             data[parentIndex] = data[minChildIndex];
             data[minChildIndex] = temp;
@@ -85,7 +89,7 @@ public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
         int minIndex = (4*index) + 1;
         int i = (4*index) + 2;
         while(i < size && i <= (4*index) + 4){
-            if(data[minIndex].compareTo(data[i]) > 0){
+            if(cmp.compare(data[minIndex], data[i]) > 0){
                 minIndex = i;
             }
             i++;
