@@ -50,7 +50,7 @@ public class QuickSort {
             array[upper] = array[lo];
             array[lo] = pivotVal;
 
-            quickSort(array, cmp, 0, pivotIndex - 1);
+            quickSort(array, cmp, 0, lo - 1);
             quickSort(array, cmp, pivotIndex + 1, upper);
         }
     }
