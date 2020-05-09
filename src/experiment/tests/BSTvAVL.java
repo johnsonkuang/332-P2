@@ -5,24 +5,27 @@ import experiment.copies.ExpBinarySearchTree;
 
 public class BSTvAVL {
 
-    public static final int[] testSizes = new int[]{100, 1000, 2000, 4000, 8000};
+    public static final int[] testSizes = new int[]{100, 1000, 2000, 4000, 8000, 16000};
     public static final int NUM_TESTS = 8;
     public static final int NUM_WARMUP = 5;
 
     public static void main(String[] args) {
-        // first, make one of each!
-        ExpBinarySearchTree<Integer, Integer> BST = new ExpBinarySearchTree<>();
-        ExpAVLTree<Integer, Integer> AVL = new ExpAVLTree<>();
+        // first, make arrays of each
+        ExpBinarySearchTree<Integer, Integer>[] arrBST =
+                (ExpBinarySearchTree<Integer, Integer>[]) new ExpBinarySearchTree[testSizes.length];
+        ExpAVLTree<Integer, Integer>[] arrAVL =
+                (ExpAVLTree<Integer, Integer>[]) new ExpAVLTree[testSizes.length];
 
         // INSERT TESTS \\
         System.out.println("______________________INSERT______________________");
         System.out.println("__________________________________________________");
         System.out.println();
 
-        // Test insert on BST
-        for(int size : testSizes) {
-            System.out.print("|| INSERT || BST || " + size + " || Runtime = ");
-            insert(BST, size);
+        // Test insert/find for each size on BST
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.print("|| INSERT || BST || " + testSizes[i] + " || Runtime = ");
+            arrBST[i] = new ExpBinarySearchTree<>();
+            insert(arrBST[i], testSizes[i]);
         }
 
         System.out.println();
@@ -30,9 +33,10 @@ public class BSTvAVL {
         System.out.println();
 
         // Test insert on AVL
-        for(int size : testSizes) {
-            System.out.print("|| INSERT || AVL || " + size + " || Runtime = ");
-            insert(AVL, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.print("|| INSERT || AVL || " + testSizes[i] + " || Runtime = ");
+            arrAVL[i] = new ExpAVLTree<>();
+            insert(arrAVL[i], testSizes[i]);
         }
 
         // FIND TESTS \\
@@ -44,9 +48,9 @@ public class BSTvAVL {
         System.out.println();
 
         // Test find on BST
-        for(int size : testSizes) {
-            System.out.print("|| INSERT || BST || " + size + " || Runtime = ");
-            find(BST, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.print("|| INSERT || BST || " + testSizes[i] + " || Runtime = ");
+            find(arrBST[i], testSizes[i]);
         }
 
         System.out.println();
@@ -54,9 +58,9 @@ public class BSTvAVL {
         System.out.println();
 
         // Test find on AVL
-        for(int size : testSizes) {
-            System.out.print("|| INSERT || AVL || " + size + " || Runtime = ");
-            find(AVL, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.print("|| INSERT || AVL || " + testSizes[i] + " || Runtime = ");
+            find(arrAVL[i], testSizes[i]);
         }
     }
 
@@ -67,7 +71,6 @@ public class BSTvAVL {
 
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
-
 
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {

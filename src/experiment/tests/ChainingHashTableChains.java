@@ -9,8 +9,8 @@ import experiment.copies.ExpNGramTester;
 public class ChainingHashTableChains {
 
     public static final int[] testSizes = new int[]{2000, 4000, 8000, 16000, 32000};
-    public static final int NUM_TESTS = 20;
-    public static final int NUM_WARMUP = 10;
+    public static final int NUM_TESTS = 8;
+    public static final int NUM_WARMUP = 5;
 
     public static void main(String[] args) {
         // get three Chaining HashTables with different chains
