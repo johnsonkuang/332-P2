@@ -1,10 +1,8 @@
-package experiment;
+package experiment.tests;
 
-import com.sun.net.httpserver.Filter;
 import cse332.datastructures.trees.BinarySearchTree;
-import datastructures.dictionaries.AVLTree;
 import datastructures.dictionaries.ChainingHashTable;
-import datastructures.worklists.CircularArrayFIFOQueue;
+import experiment.copies.ExpCircularArrayFIFOQueue;
 
 import java.util.ArrayList;
 
@@ -28,18 +26,19 @@ public class Experiment4 {
             }
             for(int i = 0; i < NUMBER_OF_QUEUES.length; i++){
                 //new array list to store all circular queues
-                ArrayList<CircularArrayFIFOQueue> lst = new ArrayList<>();
+                ArrayList<ExpCircularArrayFIFOQueue> lst = new ArrayList<>();
 
                 //instantiate all the cq's
                 for(int j = 1; j <= NUMBER_OF_QUEUES[i]; j++){
-                    CircularArrayFIFOQueue<Integer> cq = new CircularArrayFIFOQueue<>(5);
+                    ExpCircularArrayFIFOQueue<Integer> cq = new ExpCircularArrayFIFOQueue<>(5);
                     for(int elt = j; elt < j + 5; elt++){
                         cq.add(elt);
                     }
                     lst.add(cq);
                 }
 
-                ChainingHashTable<CircularArrayFIFOQueue<Integer>, Integer> hashTable = new ChainingHashTable<>(() -> new BinarySearchTree());
+                ChainingHashTable<ExpCircularArrayFIFOQueue<Integer>, Integer> hashTable =
+                        new ChainingHashTable<>(() -> new BinarySearchTree());
 
                 //start timer
                 long addStartTime = System.nanoTime();

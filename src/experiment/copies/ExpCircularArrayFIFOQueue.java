@@ -1,6 +1,5 @@
-package datastructures.worklists;
+package experiment.copies;
 
-import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
 import java.util.Iterator;
@@ -10,7 +9,7 @@ import java.util.NoSuchElementException;
  * See cse332/interfaces/worklists/FixedSizeFIFOWorkList.java
  * for method specifications.
  */
-public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFIFOWorkList<E> {
+public class ExpCircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFIFOWorkList<E> {
 
     private int head;
 
@@ -20,7 +19,7 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
 
     private E[] queue;
 
-    public CircularArrayFIFOQueue(int capacity) {
+    public ExpCircularArrayFIFOQueue(int capacity) {
         super(capacity);
         head = 0;
         tail = 0;
@@ -153,6 +152,7 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
         }
     }
 
+    /*
     @Override
     public int hashCode() {
         // You will implement this method in project 2. Leave this method unchanged for project 1.
@@ -166,4 +166,13 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
         }
         return sum;
    }
+   */
+
+   //second hash function
+
+   @Override
+   public int hashCode() {
+        return 1;
+   }
+
 }
