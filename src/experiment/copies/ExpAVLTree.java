@@ -3,7 +3,6 @@ package experiment.copies;
 import cse332.datastructures.trees.BinarySearchTree;
 
 /**
- * TODO: Replace this comment with your own as appropriate.
  *
  * AVLTree must be a subclass of BinarySearchTree<E> and must use
  * inheritance and calls to superclass methods to avoid unnecessary
