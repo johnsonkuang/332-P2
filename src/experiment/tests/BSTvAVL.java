@@ -11,10 +11,8 @@ public class BSTvAVL {
 
     public static void main(String[] args) {
         // first, make arrays of each
-        ExpBinarySearchTree<Integer, Integer>[] arrBST =
-                (ExpBinarySearchTree<Integer, Integer>[]) new ExpBinarySearchTree[testSizes.length];
-        ExpAVLTree<Integer, Integer>[] arrAVL =
-                (ExpAVLTree<Integer, Integer>[]) new ExpAVLTree[testSizes.length];
+        ExpBinarySearchTree<Integer, Integer>[] arrBST = new ExpBinarySearchTree[testSizes.length];
+        ExpAVLTree<Integer, Integer>[] arrAVL = new ExpAVLTree[testSizes.length];
 
         // INSERT TESTS \\
         System.out.println("______________________INSERT______________________");
