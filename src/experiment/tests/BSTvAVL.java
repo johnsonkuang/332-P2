@@ -5,7 +5,7 @@ import experiment.copies.ExpBinarySearchTree;
 
 public class BSTvAVL {
 
-    public static final int[] testSizes = new int[]{100, 1000, 2000, 4000, 8000, 16000};
+    public static final int[] testSizes = new int[]{100, 1000, 2000, 4000, 8000};
     public static final int NUM_TESTS = 8;
     public static final int NUM_WARMUP = 5;
 
@@ -73,15 +73,15 @@ public class BSTvAVL {
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {
 
-                long startTime = System.currentTimeMillis();
+                long startTime = System.nanoTime();
 
                 tree.insert(i, i);
 
-                long endTime = System.currentTimeMillis();
+                long endTime = System.nanoTime();
 
                 // only add for non-warmup
-                if(i > NUM_WARMUP) {
-                    totalTime+=(endTime - startTime);
+                if(n > NUM_WARMUP) {
+                    totalTime+=(endTime - startTime) / 1000.0;
                 }
             }
         }
@@ -101,15 +101,15 @@ public class BSTvAVL {
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {
 
-                long startTime = System.currentTimeMillis();
+                long startTime = System.nanoTime();
 
                 tree.find(i);
 
-                long endTime = System.currentTimeMillis();
+                long endTime = System.nanoTime();
 
                 // only add for non-warmup
-                if(i > NUM_WARMUP) {
-                    totalTime+=(endTime - startTime);
+                if(n > NUM_WARMUP) {
+                    totalTime+=(endTime - startTime) / 1000.0;
                 }
             }
         }

@@ -8,7 +8,7 @@ import experiment.copies.ExpNGramTester;
 
 public class ChainingHashTableChains {
 
-    public static final int[] testSizes = new int[]{2000, 4000, 8000, 16000, 32000};
+    public static final int[] testSizes = new int[]{100, 500, 1000, 2000, 4000, 8000, 16000, 32000};
     public static final int NUM_TESTS = 8;
     public static final int NUM_WARMUP = 5;
 

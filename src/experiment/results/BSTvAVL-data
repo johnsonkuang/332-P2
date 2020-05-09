@@ -1,38 +1,38 @@
+MICROSECONDS (SEC^-6)
+
 ______________________INSERT______________________
 __________________________________________________
 
-|| INSERT || BST || 100 || Runtime = 3.6666666666666665
-|| INSERT || BST || 1000 || Runtime = 11.333333333333334
-|| INSERT || BST || 2000 || Runtime = 38.0
-|| INSERT || BST || 4000 || Runtime = 163.66666666666666
-|| INSERT || BST || 8000 || Runtime = 640.3333333333334
-|| INSERT || BST || 16000 || Runtime = 2447.0
+|| INSERT || BST || 100 || Runtime = 94.4666666666667
+|| INSERT || BST || 1000 || Runtime = 2423.2666666666632
+|| INSERT || BST || 2000 || Runtime = 11277.300000000025
+|| INSERT || BST || 4000 || Runtime = 38763.56666666659
+|| INSERT || BST || 8000 || Runtime = 157344.76666666666
 
 __________________________________________________
 
-|| INSERT || AVL || 100 || Runtime = 0.6666666666666666
-|| INSERT || AVL || 1000 || Runtime = 3.0
-|| INSERT || AVL || 2000 || Runtime = 3.6666666666666665
-|| INSERT || AVL || 4000 || Runtime = 9.333333333333334
-|| INSERT || AVL || 8000 || Runtime = 23.666666666666668
-|| INSERT || AVL || 16000 || Runtime = 17.666666666666668
+|| INSERT || AVL || 100 || Runtime = 91.73333333333333
+|| INSERT || AVL || 1000 || Runtime = 314.46666666666334
+|| INSERT || AVL || 2000 || Runtime = 754.4666666666625
+|| INSERT || AVL || 4000 || Runtime = 2066.3000000001007
+|| INSERT || AVL || 8000 || Runtime = 6503.100000000463
 
 
 _______________________FIND_______________________
 __________________________________________________
 
-|| INSERT || BST || 100 || Runtime = 1.3333333333333333
-|| INSERT || BST || 1000 || Runtime = 15.666666666666666
-|| INSERT || BST || 2000 || Runtime = 36.333333333333336
-|| INSERT || BST || 4000 || Runtime = 164.66666666666666
-|| INSERT || BST || 8000 || Runtime = 712.0
-|| INSERT || BST || 16000 || Runtime = 3279.0
+|| INSERT || BST || 100 || Runtime = 384.0333333333333
+|| INSERT || BST || 1000 || Runtime = 2321.499999999997
+|| INSERT || BST || 2000 || Runtime = 11609.266666666694
+|| INSERT || BST || 4000 || Runtime = 36806.166666666686
+|| INSERT || BST || 8000 || Runtime = 167099.7333333323
 
 __________________________________________________
 
-|| INSERT || AVL || 100 || Runtime = 0.0
-|| INSERT || AVL || 1000 || Runtime = 0.3333333333333333
-|| INSERT || AVL || 2000 || Runtime = 0.6666666666666666
-|| INSERT || AVL || 4000 || Runtime = 0.6666666666666666
-|| INSERT || AVL || 8000 || Runtime = 3.3333333333333335
-|| INSERT || AVL || 16000 || Runtime = 6.0
+|| INSERT || AVL || 100 || Runtime = 5.099999999999987
+|| INSERT || AVL || 1000 || Runtime = 73.13333333333107
+|| INSERT || AVL || 2000 || Runtime = 543.1333333333301
+|| INSERT || AVL || 4000 || Runtime = 420.2333333333322
+|| INSERT || AVL || 8000 || Runtime = 836.5333333331749
+
+Process finished with exit code 0
