@@ -14,7 +14,7 @@ public class BSTvAVL {
         ExpBinarySearchTree<Integer, Integer> BST = new ExpBinarySearchTree<>();
         ExpAVLTree<Integer, Integer> AVL = new ExpAVLTree<>();
 
-        // ||||| INSERT TESTS |||||
+        // INSERT TESTS \\
         System.out.println("______________________INSERT______________________");
         System.out.println("__________________________________________________");
         System.out.println();
@@ -35,15 +35,15 @@ public class BSTvAVL {
             insert(AVL, size);
         }
 
+        // FIND TESTS \\
+
         System.out.println();
         System.out.println();
         System.out.println("_______________________FIND_______________________");
         System.out.println("__________________________________________________");
         System.out.println();
 
-
-        // ||||| FIND TESTS |||||
-        // Test insert on BST
+        // Test find on BST
         for(int size : testSizes) {
             System.out.print("|| INSERT || BST || " + size + " || Runtime = ");
             find(BST, size);
@@ -53,7 +53,7 @@ public class BSTvAVL {
         System.out.println("__________________________________________________");
         System.out.println();
 
-        // Test insert on AVL
+        // Test find on AVL
         for(int size : testSizes) {
             System.out.print("|| INSERT || AVL || " + size + " || Runtime = ");
             find(AVL, size);
