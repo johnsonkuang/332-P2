@@ -153,6 +153,7 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
         }
     }
 
+    /*
     @Override
     public int hashCode() {
         // You will implement this method in project 2. Leave this method unchanged for project 1.
@@ -165,5 +166,14 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
             idx = idx + 1;
         }
         return sum;
-    }
+   }
+   */
+
+   //second hash function
+
+   @Override
+   public int hashCode() {
+        return 1;
+   }
+
 }

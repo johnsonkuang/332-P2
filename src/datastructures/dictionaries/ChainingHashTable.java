@@ -64,7 +64,10 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         // generate key hash
         int keyHash = key.hashCode();
         // mod by capacity
-        return keyHash % length;
+        int index = keyHash % length;
+
+        //because of integer overflow, hash could be negative, so we want the positive mod. To obtain, we add by length
+        return index < 0 ? index + length : index;
     }
 
     // helper method — checks and inserts item, returns previous value
@@ -130,7 +133,6 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
     }
 
     private class ChainingHashTableIterator implements Iterator<Item<K, V>> {
-        Item<K, V> curr;
         private int hashTableIndex = 0;
         private int itemsSeen = 0;
         private Iterator<Item<K, V>> dictItr;
@@ -145,26 +147,25 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
                   ChainingHashTable.this.hashTable[hashTableIndex] == null){
                 hashTableIndex++;
             }
-            if(hashTableIndex == ChainingHashTable.this.hashTable.length){
-                throw new IndexOutOfBoundsException();
-            }
             //invariant: hashTableIndex points to the index of the first dictionary in the hashtable
-            return ChainingHashTable.this.hashTable[hashTableIndex].iterator();
+            return hashTableIndex == ChainingHashTable.this.hashTable.length ? null :
+                                                ChainingHashTable.this.hashTable[hashTableIndex].iterator();
         }
 
         @Override
         public boolean hasNext() {
-            return itemsSeen < ChainingHashTable.this.size();
+            if(dictItr == null)
+                return false;
+            if(!dictItr.hasNext()) {
+                hashTableIndex++;
+                dictItr = getNextIterator();
+            }
+            return dictItr != null && dictItr.hasNext();
         }
 
         @Override
         public Item<K, V> next() {
             // if current dict iterator empty, use index to search for next iterator
-            if(!dictItr.hasNext()) {
-                hashTableIndex++;
-                dictItr = getNextIterator();
-            }
-            itemsSeen++;
             return dictItr.next();
         }
     }
