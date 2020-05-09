@@ -13,6 +13,8 @@ import datastructures.dictionaries.ChainingHashTable;
 import datastructures.dictionaries.HashTrieMap;
 import p2.wordsuggestor.WordSuggestor;
 
+import javax.sound.midi.SysexMessage;
+
 public class NGramTester {
     public static <A extends Comparable<A>, K extends BString<A>, V> Supplier<Dictionary<K, V>> trieConstructor(Class<K> clz) {
         return () -> new HashTrieMap<A, K, V>(clz);
@@ -33,13 +35,64 @@ public class NGramTester {
         return () -> new AVLTree();
     }
 
+    public enum dicts {
+        hashTrieMap, hashTable, bst, avl
+    }
+
+    public static final int NUM_TESTS = 8;
+    public static final int NUM_WARMUP = 3;
 
     public static void main(String[] args) {
         try {
-            WordSuggestor suggestions = new WordSuggestor("eggs.txt", 2, -1,
-                    NGramTester.trieConstructor(NGram.class),
-                    NGramTester.trieConstructor(AlphabeticString.class));
-            System.out.println(suggestions);
+            StringBuilder output = new StringBuilder();
+            for(dicts dict: dicts.values()){
+                output.append("---------------------------------------\n");
+                output.append("Results for " + dict.name() + "\n");
+
+                double totalAddTime = 0;
+                double totalFindTime = 0;
+
+                for(int trial = 1; trial <= NUM_TESTS; trial++){
+                    //start add time
+
+                    WordSuggestor suggestions;
+                    //start time
+                    long addStartTime = System.nanoTime();
+                    switch (dict) {
+                        case hashTrieMap:
+                            suggestions = new WordSuggestor("alice.txt", 3, -1,
+                                    NGramTester.trieConstructor(NGram.class),
+                                    NGramTester.trieConstructor(AlphabeticString.class));
+                            break;
+                        case hashTable:
+                            suggestions = new WordSuggestor("alice.txt", 3, -1,
+                                    NGramTester.hashtableConstructor(() -> new AVLTree()),
+                                    NGramTester.hashtableConstructor(() -> new AVLTree()));
+                            break;
+                        case bst:
+                            suggestions = new WordSuggestor("alice.txt", 3, -1,
+                                    NGramTester.binarySearchTreeConstructor(),
+                                    NGramTester.binarySearchTreeConstructor());
+                            break;
+                        case avl:
+                            suggestions = new WordSuggestor("alice.txt", 3, -1,
+                                    NGramTester.avlTreeConstructor(),
+                                    NGramTester.avlTreeConstructor());
+                    }
+                    //end time
+                    long addEndTime = System.nanoTime();
+                    //in milliseconds
+                    double addTime = (addEndTime - addStartTime) / 1_000_000.0;
+
+                    if(trial > NUM_WARMUP){
+                        output.append("\tTrial " + (trial - NUM_WARMUP) + ":\n");
+                        output.append("\t\tAdd Time: " + addTime + " ms\n");
+                        totalAddTime += addTime;
+                    }
+                    //find component
+
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
