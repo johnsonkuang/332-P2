@@ -164,8 +164,6 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
             sum += this.queue[(head + idx) % this.capacity()].hashCode() * (idx + 1);
             idx = idx + 1;
         }
-        // we've ascended, so we choose a prime
-        sum %= 31;
         return sum;
     }
 }
