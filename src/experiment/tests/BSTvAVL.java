@@ -23,7 +23,7 @@ public class BSTvAVL {
         for(int i = 0; i < testSizes.length; i++) {
             System.out.println("|| INSERT || BST || " + testSizes[i] + " || Runtime:");
             arrBST[i] = new ExpBinarySearchTree<>();
-            insert(arrBST[i], testSizes[i]);
+            insertBST(arrBST[i], testSizes[i]);
         }
 
         System.out.println();
@@ -34,7 +34,7 @@ public class BSTvAVL {
         for(int i = 0; i < testSizes.length; i++) {
             System.out.println("|| INSERT || AVL || " + testSizes[i] + " || Runtime:");
             arrAVL[i] = new ExpAVLTree<>();
-            insert(arrAVL[i], testSizes[i]);
+            insertAVL(arrAVL[i], testSizes[i]);
         }
 
         // FIND TESTS \\
@@ -62,7 +62,7 @@ public class BSTvAVL {
         }
     }
 
-    private static void insert(ExpBinarySearchTree<Integer, Integer> tree, int testSize) {
+    private static void insertBST(ExpBinarySearchTree<Integer, Integer> tree, int testSize) {
 
         // store total time for multiple trials
         // double totalTime = 0;
@@ -93,6 +93,44 @@ public class BSTvAVL {
             if (n >= NUM_WARMUP) {
                 System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
             }
+            tree = new ExpBinarySearchTree<>();
+        }
+        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
+        // System.out.println(avgTime);
+    }
+
+    private static void insertAVL(ExpAVLTree<Integer, Integer> tree, int testSize) {
+
+        // store total time for multiple trials
+        // double totalTime = 0;
+        double trialTime = 0;
+
+        // run NUM_TESTS trials
+        for(int n = 0; n < NUM_TESTS; n++) {
+
+            // reset trial time
+            trialTime = 0;
+
+            // insert values up to the current test Size
+            for (int i = 0; i < testSize; i++) {
+
+                long startTime = System.nanoTime();
+
+                tree.insert(i, i);
+
+                long endTime = System.nanoTime();
+
+                // only add for non-warmup
+                if (n >= NUM_WARMUP) {
+
+                    // totalTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000000.0;
+                }
+            }
+            if (n >= NUM_WARMUP) {
+                System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
+            }
+            tree = new ExpAVLTree<>();
         }
         // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
         // System.out.println(avgTime);
