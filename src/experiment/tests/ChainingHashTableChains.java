@@ -1,8 +1,6 @@
 package experiment.tests;
 
-import datastructures.dictionaries.ChainingHashTable;
 import experiment.copies.*;
-import p2.clients.NGramTester;
 
 public class ChainingHashTableChains {
 
@@ -13,7 +11,7 @@ public class ChainingHashTableChains {
     public enum chainType {
         bst,
         avl,
-        mvf
+        mtf
     }
 
     public static void main(String[] args) {
@@ -60,7 +58,7 @@ public class ChainingHashTableChains {
         for(int i = 0; i < testSizes.length; i++) {
             System.out.println("|| UNSORTED INSERT || CHAIN MTF || " + testSizes[i] + " || " +
                     "Runtime:");
-            unsortedInsert(i, testSizes[i], chainType.mvf, arrChainMVFStr);
+            unsortedInsert(i, testSizes[i], chainType.mtf, arrChainMVFStr);
         }
 
         // UNSORTED || FIND TESTS \\
@@ -116,7 +114,7 @@ public class ChainingHashTableChains {
                 case avl:
                     tree = new ExpChainingHashTable<>(() -> new ExpAVLTree());
                     break;
-                case mvf:
+                case mtf:
                     tree = new ExpChainingHashTable<>(() -> new ExpMoveToFrontList());
                     break;
             }
