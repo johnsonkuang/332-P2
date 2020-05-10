@@ -1,0 +1,100 @@
+-----------------------------------------
+Trial 1 Results:
+	2000 CQs:
+		Add Time: 0.4171
+		Find Time: 0.077201
+	4000 CQs:
+		Add Time: 1.005499
+		Find Time: 0.0105
+	8000 CQs:
+		Add Time: 2.1821
+		Find Time: 0.040101
+	16000 CQs:
+		Add Time: 4.8384
+		Find Time: 0.0458
+	32000 CQs:
+		Add Time: 8.2238
+		Find Time: 0.161301
+	64000 CQs:
+		Add Time: 24.953301
+		Find Time: 0.173199
+-----------------------------------------
+Trial 2 Results:
+	2000 CQs:
+		Add Time: 0.361399
+		Find Time: 0.0054
+	4000 CQs:
+		Add Time: 0.7636
+		Find Time: 0.0108
+	8000 CQs:
+		Add Time: 1.6058
+		Find Time: 0.0246
+	16000 CQs:
+		Add Time: 7.9622
+		Find Time: 0.046
+	32000 CQs:
+		Add Time: 8.2427
+		Find Time: 0.091899
+	64000 CQs:
+		Add Time: 23.364199
+		Find Time: 0.212801
+-----------------------------------------
+Trial 3 Results:
+	2000 CQs:
+		Add Time: 0.923201
+		Find Time: 0.0071
+	4000 CQs:
+		Add Time: 0.8128
+		Find Time: 0.0104
+	8000 CQs:
+		Add Time: 2.4911
+		Find Time: 0.0
+	16000 CQs:
+		Add Time: 4.497
+		Find Time: 0.0
+	32000 CQs:
+		Add Time: 9.1654
+		Find Time: 0.0
+	64000 CQs:
+		Add Time: 20.427499
+		Find Time: 2.0E-4
+-----------------------------------------
+Trial 4 Results:
+	2000 CQs:
+		Add Time: 0.583099
+		Find Time: 9.9E-5
+	4000 CQs:
+		Add Time: 0.9444
+		Find Time: 1.0E-4
+	8000 CQs:
+		Add Time: 5.7192
+		Find Time: 0.0
+	16000 CQs:
+		Add Time: 5.4023
+		Find Time: 1.01E-4
+	32000 CQs:
+		Add Time: 8.325199
+		Find Time: 2.0E-4
+	64000 CQs:
+		Add Time: 18.0998
+		Find Time: 1.0E-4
+-----------------------------------------
+Trial 5 Results:
+	2000 CQs:
+		Add Time: 0.3637
+		Find Time: 0.0
+	4000 CQs:
+		Add Time: 1.2824
+		Find Time: 0.0
+	8000 CQs:
+		Add Time: 2.5535
+		Find Time: 9.9E-5
+	16000 CQs:
+		Add Time: 5.4109
+		Find Time: 0.0
+	32000 CQs:
+		Add Time: 10.821
+		Find Time: 1.0E-4
+	64000 CQs:
+		Add Time: 17.7055
+		Find Time: 0.0

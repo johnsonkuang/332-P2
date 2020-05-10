@@ -87,7 +87,7 @@ public class ExpNGramTester {
 
                     if(trial > NUM_WARMUP){
                         output.append("\tTrial " + (trial - NUM_WARMUP) + ":\n");
-                        output.append("\t\tAdd Time: " + (addTime / 1_000_000.0) + " ms\n");
+                        output.append("\t\tAdd Time: " + (addTime / 1_000_000.0) + "\n");
                         totalAddTime += addTime;
                     }
 
@@ -103,7 +103,7 @@ public class ExpNGramTester {
                     double findTime = (findEndTime - findStartTime);
 
                     if(trial > NUM_WARMUP){
-                        output.append("\t\tFind Time: " + (findTime / 1_000_000.0) + " ms\n");
+                        output.append("\t\tFind Time: " + (findTime / 1_000_000.0) + "\n");
                     }
                 }
             }

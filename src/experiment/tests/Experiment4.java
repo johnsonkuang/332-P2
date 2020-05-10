@@ -53,7 +53,7 @@ public class Experiment4 {
 
                 if(NUM_WARMUP <= trial){
                     output.append("\t" + NUMBER_OF_QUEUES[i] + " CQs: \n");
-                    output.append("\t\tAdd Time: " + (addEndTime - addStartTime) / 1_000_000.0 + " ms\n");
+                    output.append("\t\tAdd Time: " + (addEndTime - addStartTime) / 1_000_000.0 + "\n");
                 }
 
                 long findStartTime = System.nanoTime();
@@ -63,7 +63,7 @@ public class Experiment4 {
                 long findEndTime = System.nanoTime();
                 //aggregate result output
                 if(NUM_WARMUP <= trial){
-                    output.append("\t\tFind Time: " + (findEndTime - findStartTime) / 1_000_000.0 + " ms\n");
+                    output.append("\t\tFind Time: " + (findEndTime - findStartTime) / 1_000_000.0 + "\n");
                 }
             }
             System.out.println("Finished Trial  " + (trial + 1) + "\n");

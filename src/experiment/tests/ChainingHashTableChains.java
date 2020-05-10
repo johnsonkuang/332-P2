@@ -9,8 +9,8 @@ import experiment.copies.ExpNGramTester;
 public class ChainingHashTableChains {
 
     public static final int[] testSizes = new int[]{2000, 4000, 8000, 16000, 32000};
-    public static final int NUM_TESTS = 10;
-    public static final int NUM_WARMUP = 5;
+    public static final int NUM_TESTS = 8;
+    public static final int NUM_WARMUP = 3;
 
     public static void main(String[] args) {
         // get three Chaining HashTables with different chains
@@ -194,7 +194,7 @@ public class ChainingHashTableChains {
                 if (n >= NUM_WARMUP) {
 
                     // totalTime += (endTime - startTime) / 1000.0;
-                    trialTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000000.0;
                 }
             }
             if (n >= NUM_WARMUP) {
@@ -231,7 +231,7 @@ public class ChainingHashTableChains {
                 if (n >= NUM_WARMUP) {
 
                     // totalTime += (endTime - startTime) / 1000.0;
-                    trialTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000000.0;
                 }
             }
             if (n >= NUM_WARMUP) {
@@ -265,7 +265,7 @@ public class ChainingHashTableChains {
                 if (n >= NUM_WARMUP) {
 
                     // totalTime += (endTime - startTime) / 1000.0;
-                    trialTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000000.0;
                 }
             }
             if (n >= NUM_WARMUP) {
@@ -302,7 +302,7 @@ public class ChainingHashTableChains {
                 if (n >= NUM_WARMUP) {
 
                     // totalTime += (endTime - startTime) / 1000.0;
-                    trialTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000000.0;
                 }
             }
             if (n >= NUM_WARMUP) {

@@ -1,0 +1,68 @@
+---------------------------------------
+Results for hashTrieMap
+	Trial 1:
+		Add Time: 118.1149
+		Find Time: 1.503701
+	Trial 2:
+		Add Time: 117.924799
+		Find Time: 0.9029
+	Trial 3:
+		Add Time: 159.7206
+		Find Time: 1.2144
+	Trial 4:
+		Add Time: 81.0287
+		Find Time: 1.6467
+	Trial 5:
+		Add Time: 183.2152
+		Find Time: 0.887499
+---------------------------------------
+Results for hashTable
+	Trial 1:
+		Add Time: 58.1373
+		Find Time: 0.154899
+	Trial 2:
+		Add Time: 64.8138
+		Find Time: 0.1474
+	Trial 3:
+		Add Time: 39.3105
+		Find Time: 0.114501
+	Trial 4:
+		Add Time: 34.4366
+		Find Time: 0.1912
+	Trial 5:
+		Add Time: 34.7374
+		Find Time: 0.18
+---------------------------------------
+Results for bst
+	Trial 1:
+		Add Time: 114.512101
+		Find Time: 0.127301
+	Trial 2:
+		Add Time: 118.909199
+		Find Time: 0.162
+	Trial 3:
+		Add Time: 116.159101
+		Find Time: 0.1403
+	Trial 4:
+		Add Time: 125.9232
+		Find Time: 0.147199
+	Trial 5:
+		Add Time: 113.3809
+		Find Time: 0.1209
+---------------------------------------
+Results for avl
+	Trial 1:
+		Add Time: 113.2619
+		Find Time: 0.0817
+	Trial 2:
+		Add Time: 115.848001
+		Find Time: 0.0814
+	Trial 3:
+		Add Time: 108.7797
+		Find Time: 0.0744
+	Trial 4:
+		Add Time: 116.904901
+		Find Time: 0.0794
+	Trial 5:
+		Add Time: 104.9781
+		Find Time: 0.0725
