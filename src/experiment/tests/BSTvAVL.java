@@ -22,8 +22,7 @@ public class BSTvAVL {
         // Test insert/find for each size on BST
         for(int i = 0; i < testSizes.length; i++) {
             System.out.println("|| INSERT || BST || " + testSizes[i] + " || Runtime:");
-            arrBST[i] = new ExpBinarySearchTree<>();
-            insertBST(arrBST[i], testSizes[i]);
+            insertBST(i, testSizes[i], arrBST);
         }
 
         System.out.println();
@@ -33,8 +32,7 @@ public class BSTvAVL {
         // Test insert on AVL
         for(int i = 0; i < testSizes.length; i++) {
             System.out.println("|| INSERT || AVL || " + testSizes[i] + " || Runtime:");
-            arrAVL[i] = new ExpAVLTree<>();
-            insertAVL(arrAVL[i], testSizes[i]);
+            insertAVL(i, testSizes[i], arrAVL);
         }
 
         // FIND TESTS \\
@@ -62,17 +60,18 @@ public class BSTvAVL {
         }
     }
 
-    private static void insertBST(ExpBinarySearchTree<Integer, Integer> tree, int testSize) {
+    private static void insertBST(int j, int testSize,
+                                  ExpBinarySearchTree<Integer, Integer>[] arrBST) {
 
         // store total time for multiple trials
-        // double totalTime = 0;
-        double trialTime = 0;
 
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
 
+            ExpBinarySearchTree<Integer, Integer> tree = new ExpBinarySearchTree<>();
+
             // reset trial time
-            trialTime = 0;
+            double trialTime = 0;
 
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {
@@ -93,23 +92,23 @@ public class BSTvAVL {
             if (n >= NUM_WARMUP) {
                 System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
             }
-            tree = new ExpBinarySearchTree<>();
+
+            arrBST[j] = tree;
         }
-        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        // System.out.println(avgTime);
     }
 
-    private static void insertAVL(ExpAVLTree<Integer, Integer> tree, int testSize) {
+    private static void insertAVL(int j, int testSize,
+                                  ExpAVLTree<Integer, Integer>[] arrAVL) {
 
         // store total time for multiple trials
-        // double totalTime = 0;
-        double trialTime = 0;
 
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
 
+            ExpAVLTree<Integer, Integer> tree = new ExpAVLTree<>();
+
             // reset trial time
-            trialTime = 0;
+            double trialTime = 0;
 
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {
@@ -130,23 +129,20 @@ public class BSTvAVL {
             if (n >= NUM_WARMUP) {
                 System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
             }
-            tree = new ExpAVLTree<>();
+
+            arrAVL[j] = tree;
         }
-        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        // System.out.println(avgTime);
     }
 
     private static void find(ExpBinarySearchTree<Integer, Integer> tree, int testSize) {
 
         // store total time for multiple trials
-        // double totalTime = 0;
-        double trialTime = 0;
 
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
 
             // reset trialTime
-            trialTime = 0;
+            double trialTime = 0;
 
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {
@@ -168,7 +164,5 @@ public class BSTvAVL {
                 System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
             }
         }
-        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        // System.out.println(avgTime);
     }
 }
