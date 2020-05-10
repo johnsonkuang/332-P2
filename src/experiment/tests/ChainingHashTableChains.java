@@ -153,7 +153,6 @@ public class ChainingHashTableChains {
     private static void unsortedFind(ExpChainingHashTable<String, Integer> tree, int testSize) {
 
         // store total time for multiple trials
-        // double totalTime = 0;
 
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
@@ -165,11 +164,11 @@ public class ChainingHashTableChains {
             for (int i = 0; i < testSize; i++) {
 
                 int k = (i % testSize) * 37 % testSize;
-                String str = String.format("%05d", k);
+                String str = String.format("%06d", k);
 
                 long startTime = System.nanoTime();
 
-                assert tree.find(str) == Integer.parseInt(str);
+                tree.find(str);
 
                 long endTime = System.nanoTime();
 
@@ -184,7 +183,5 @@ public class ChainingHashTableChains {
                 System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
             }
         }
-        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        // System.out.println(avgTime);
     }
 }
