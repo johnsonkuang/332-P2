@@ -9,25 +9,24 @@ import experiment.copies.ExpNGramTester;
 public class ChainingHashTableChains {
 
     public static final int[] testSizes = new int[]{2000, 4000, 8000, 16000, 32000};
-    public static final int NUM_TESTS = 20;
-    public static final int NUM_WARMUP = 10;
+    public static final int NUM_TESTS = 10;
+    public static final int NUM_WARMUP = 5;
 
     public static void main(String[] args) {
         // get three Chaining HashTables with different chains
-        ExpChainingHashTable<Integer, Integer> chainBST =
-                new ExpChainingHashTable<>(ExpNGramTester.binarySearchTreeConstructor());
-        ExpChainingHashTable<Integer, Integer> chainAVL =
-                new ExpChainingHashTable<>(ExpNGramTester.avlTreeConstructor());
-        ExpChainingHashTable<Integer, Integer> chainMTF =
-                new ExpChainingHashTable<>(ExpMoveToFrontList::new);
+        ExpChainingHashTable<Integer, Integer>[] arrChainBST = new ExpChainingHashTable[testSizes.length];
+        ExpChainingHashTable<Integer, Integer>[] arrChainAVL =
+                new ExpChainingHashTable[testSizes.length];
+        ExpChainingHashTable<Integer, Integer>[] arrChainMVF =
+                new ExpChainingHashTable[testSizes.length];
 
         // <String, Integer> for unsorted input
-        ExpChainingHashTable<String, Integer> chainBSTStr =
-                new ExpChainingHashTable<>(ExpNGramTester.binarySearchTreeConstructor());
-        ExpChainingHashTable<String, Integer> chainAVLStr =
-                new ExpChainingHashTable<>(ExpNGramTester.avlTreeConstructor());
-        ExpChainingHashTable<String, Integer> chainMTFStr =
-                new ExpChainingHashTable<>(ExpMoveToFrontList::new);
+        ExpChainingHashTable<String, Integer>[] arrChainBSTStr =
+                new ExpChainingHashTable[testSizes.length];
+        ExpChainingHashTable<String, Integer>[] arrChainAVLStr =
+                new ExpChainingHashTable[testSizes.length];
+        ExpChainingHashTable<String, Integer>[] arrChainMTFStr =
+                new ExpChainingHashTable[testSizes.length];
 
         // SORTED || INSERT TESTS \\
         System.out.println("__________________SORTED__INSERT__________________");
@@ -35,9 +34,10 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test sorted insert on BST chain
-        for(int size : testSizes) {
-            System.out.print("|| SORTED INSERT || CHAIN BST || " + size + " || Runtime = ");
-            sortedInsert(chainBST, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| SORTED INSERT || CHAIN BST || " + testSizes[i] + " || Runtime:");
+            arrChainBST[i] = new ExpChainingHashTable<>(ExpNGramTester.binarySearchTreeConstructor());
+            sortedInsert(arrChainBST[i], testSizes[i]);
         }
 
         System.out.println();
@@ -45,9 +45,10 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test sorted insert on AVL chain
-        for(int size : testSizes) {
-            System.out.print("|| SORTED INSERT || CHAIN AVL || " + size + " || Runtime = ");
-            sortedInsert(chainAVL, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| SORTED INSERT || CHAIN AVL || " + testSizes[i] + " || Runtime:");
+            arrChainAVL[i] = new ExpChainingHashTable<>(ExpNGramTester.avlTreeConstructor());
+            sortedInsert(arrChainAVL[i], testSizes[i]);
         }
 
         System.out.println();
@@ -55,9 +56,10 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test sorted insert on MTF chain
-        for(int size : testSizes) {
-            System.out.print("|| SORTED INSERT || CHAIN MTF || " + size + " || Runtime = ");
-            sortedInsert(chainMTF, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| SORTED INSERT || CHAIN MTF || " + testSizes[i] + " || Runtime:");
+            arrChainMVF[i] = new ExpChainingHashTable<>(ExpMoveToFrontList::new);
+            sortedInsert(arrChainMVF[i], testSizes[i]);
         }
 
         // SORTED || FIND TESTS \\
@@ -69,9 +71,9 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test find on BST chain
-        for(int size : testSizes) {
-            System.out.print("|| SORTED FIND || CHAIN BST || " + size + " || Runtime = ");
-            sortedFind(chainBST, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| SORTED FIND || CHAIN BST || " + testSizes[i] + " || Runtime:");
+            sortedFind(arrChainBST[i], testSizes[i]);
         }
 
         System.out.println();
@@ -79,9 +81,9 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test find on AVL chain
-        for(int size : testSizes) {
-            System.out.print("|| SORTED FIND || CHAIN AVL || " + size + " || Runtime = ");
-            sortedFind(chainAVL, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| SORTED FIND || CHAIN AVL || " + testSizes[i] + " || Runtime:");
+            sortedFind(arrChainAVL[i], testSizes[i]);
         }
 
         System.out.println();
@@ -89,9 +91,9 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test find on MTF chain
-        for(int size : testSizes) {
-            System.out.print("|| SORTED FIND || CHAIN MTF || " + size + " || Runtime = ");
-            sortedFind(chainMTF, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| SORTED FIND || CHAIN MTF || " + testSizes[i] + " || Runtime:");
+            sortedFind(arrChainMVF[i], testSizes[i]);
         }
 
         // UNSORTED || INSERT TESTS \\
@@ -103,9 +105,11 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test unsorted insert on BST chain
-        for(int size : testSizes) {
-            System.out.print("|| UNSORTED INSERT || CHAIN BST || " + size + " || Runtime = ");
-            unsortedInsert(chainBSTStr, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| UNSORTED INSERT || CHAIN BST || " + testSizes[i] + " || " +
+                    "Runtime:");
+            arrChainBSTStr[i] = new ExpChainingHashTable<>(ExpNGramTester.binarySearchTreeConstructor());
+            unsortedInsert(arrChainBSTStr[i], testSizes[i]);
         }
 
         System.out.println();
@@ -113,9 +117,11 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test unsorted insert on AVL chain
-        for(int size : testSizes) {
-            System.out.print("|| UNSORTED INSERT || CHAIN AVL || " + size + " || Runtime = ");
-            unsortedInsert(chainAVLStr, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| UNSORTED INSERT || CHAIN AVL || " + testSizes[i] + " || " +
+                    "Runtime:");
+            arrChainAVLStr[i] = new ExpChainingHashTable<>(ExpNGramTester.avlTreeConstructor());
+            unsortedInsert(arrChainAVLStr[i], testSizes[i]);
         }
 
         System.out.println();
@@ -123,9 +129,11 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test unsorted insert on MTF chain
-        for(int size : testSizes) {
-            System.out.print("|| UNSORTED INSERT || CHAIN MTF || " + size + " || Runtime = ");
-            unsortedInsert(chainMTFStr, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| UNSORTED INSERT || CHAIN MTF || " + testSizes[i] + " || " +
+                    "Runtime:");
+            arrChainMTFStr[i] = new ExpChainingHashTable<>(ExpMoveToFrontList::new);
+            unsortedInsert(arrChainMTFStr[i], testSizes[i]);
         }
 
         // UNSORTED || FIND TESTS \\
@@ -137,9 +145,9 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test find on BST chain
-        for(int size : testSizes) {
-            System.out.print("|| UNSORTED FIND || CHAIN BST || " + size + " || Runtime = ");
-            unsortedFind(chainBSTStr, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| UNSORTED FIND || CHAIN BST || " + testSizes[i] + " || Runtime:");
+            unsortedFind(arrChainBSTStr[i], testSizes[i]);
         }
 
         System.out.println();
@@ -147,9 +155,9 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test find on AVL chain
-        for(int size : testSizes) {
-            System.out.print("|| UNSORTED FIND || CHAIN AVL || " + size + " || Runtime = ");
-            unsortedFind(chainAVLStr, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.print("|| UNSORTED FIND || CHAIN AVL || " + testSizes[i] + " || Runtime:");
+            unsortedFind(arrChainAVLStr[i], testSizes[i]);
         }
 
         System.out.println();
@@ -157,9 +165,9 @@ public class ChainingHashTableChains {
         System.out.println();
 
         // Test find on MTF chain
-        for(int size : testSizes) {
-            System.out.print("|| UNSORTED FIND || CHAIN MTF || " + size + " || Runtime = ");
-            unsortedFind(chainMTFStr, size);
+        for(int i = 0; i < testSizes.length; i++) {
+            System.out.println("|| UNSORTED FIND || CHAIN MTF || " + testSizes[i] + " || Runtime:");
+            unsortedFind(arrChainMTFStr[i], testSizes[i]);
         }
 
     }
@@ -167,7 +175,8 @@ public class ChainingHashTableChains {
     private static void sortedInsert(ExpChainingHashTable<Integer, Integer> tree, int testSize) {
 
         // store total time for multiple trials
-        double totalTime = 0;
+        // double totalTime = 0;
+        double trialTime = 0;
 
         // run NUM_TESTS trials
         for (int n = 0; n < NUM_TESTS; n++) {
@@ -182,19 +191,25 @@ public class ChainingHashTableChains {
                 long endTime = System.nanoTime();
 
                 // only add for non-warmup
-                if (i > NUM_WARMUP) {
-                    totalTime += (endTime - startTime);
+                if (n >= NUM_WARMUP) {
+
+                    // totalTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000.0;
                 }
             }
+            if (n >= NUM_WARMUP) {
+                System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
+            }
         }
-        double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        System.out.println(avgTime);
+        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
+        // System.out.println(avgTime);
     }
 
     private static void unsortedInsert(ExpChainingHashTable<String, Integer> tree, int testSize) {
 
         // store total time for multiple trials
-        double totalTime = 0;
+        // double totalTime = 0;
+        double trialTime = 0;
 
         // run NUM_TESTS trials
         for (int n = 0; n < NUM_TESTS; n++) {
@@ -213,19 +228,25 @@ public class ChainingHashTableChains {
                 long endTime = System.nanoTime();
 
                 // only add for non-warmup
-                if (i > NUM_WARMUP) {
-                    totalTime += (endTime - startTime);
+                if (n >= NUM_WARMUP) {
+
+                    // totalTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000.0;
                 }
             }
+            if (n >= NUM_WARMUP) {
+                System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
+            }
         }
-        double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        System.out.println(avgTime);
+        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
+        // System.out.println(avgTime);
     }
 
     private static void sortedFind(ExpChainingHashTable<Integer, Integer> tree, int testSize) {
 
         // store total time for multiple trials
-        double totalTime = 0;
+        // double totalTime = 0;
+        double trialTime = 0;
 
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
@@ -241,19 +262,25 @@ public class ChainingHashTableChains {
                 long endTime = System.nanoTime();
 
                 // only add for non-warmup
-                if(i > NUM_WARMUP) {
-                    totalTime+=(endTime - startTime);
+                if (n >= NUM_WARMUP) {
+
+                    // totalTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000.0;
                 }
             }
+            if (n >= NUM_WARMUP) {
+                System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
+            }
         }
-        double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        System.out.println(avgTime);
+        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
+        // System.out.println(avgTime);
     }
 
     private static void unsortedFind(ExpChainingHashTable<String, Integer> tree, int testSize) {
 
         // store total time for multiple trials
-        double totalTime = 0;
+        // double totalTime = 0;
+        double trialTime = 0;
 
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
@@ -272,12 +299,17 @@ public class ChainingHashTableChains {
                 long endTime = System.nanoTime();
 
                 // only add for non-warmup
-                if(i > NUM_WARMUP) {
-                    totalTime+=(endTime - startTime);
+                if (n >= NUM_WARMUP) {
+
+                    // totalTime += (endTime - startTime) / 1000.0;
+                    trialTime += (endTime - startTime) / 1000.0;
                 }
             }
+            if (n >= NUM_WARMUP) {
+                System.out.println("     Trial " + (n - NUM_WARMUP + 1) + ": " + trialTime);
+            }
         }
-        double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
-        System.out.println(avgTime);
+        // double avgTime = totalTime / (NUM_TESTS - NUM_WARMUP);
+        // System.out.println(avgTime);
     }
 }
