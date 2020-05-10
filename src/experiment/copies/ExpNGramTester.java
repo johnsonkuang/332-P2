@@ -62,23 +62,23 @@ public class ExpNGramTester {
                     switch (dict) {
                         case hashTrieMap:
                             suggestions = new WordSuggestor("alice.txt", 3, -1,
-                                    p2.clients.NGramTester.trieConstructor(NGram.class),
-                                    p2.clients.NGramTester.trieConstructor(AlphabeticString.class));
+                                    ExpNGramTester.trieConstructor(NGram.class),
+                                    ExpNGramTester.trieConstructor(AlphabeticString.class));
                             break;
                         case hashTable:
                             suggestions = new WordSuggestor("alice.txt", 3, -1,
-                                    p2.clients.NGramTester.hashtableConstructor(() -> new AVLTree()),
-                                    p2.clients.NGramTester.hashtableConstructor(() -> new AVLTree()));
+                                    ExpNGramTester.hashtableConstructor(() -> new AVLTree()),
+                                    ExpNGramTester.hashtableConstructor(() -> new AVLTree()));
                             break;
                         case bst:
                             suggestions = new WordSuggestor("alice.txt", 3, -1,
-                                    p2.clients.NGramTester.binarySearchTreeConstructor(),
-                                    p2.clients.NGramTester.binarySearchTreeConstructor());
+                                    ExpNGramTester.binarySearchTreeConstructor(),
+                                    ExpNGramTester.binarySearchTreeConstructor());
                             break;
                         case avl:
                             suggestions = new WordSuggestor("alice.txt", 3, -1,
-                                    p2.clients.NGramTester.avlTreeConstructor(),
-                                    p2.clients.NGramTester.avlTreeConstructor());
+                                    ExpNGramTester.avlTreeConstructor(),
+                                    ExpNGramTester.avlTreeConstructor());
                     }
                     //end time
                     long addEndTime = System.nanoTime();
