@@ -1,6 +1,7 @@
 package experiment.tests;
 
 import cse332.datastructures.trees.BinarySearchTree;
+import datastructures.dictionaries.AVLTree;
 import datastructures.dictionaries.ChainingHashTable;
 import experiment.copies.ExpCircularArrayFIFOQueue;
 
@@ -20,6 +21,7 @@ public class Experiment4 {
     public static void main(String[] args) {
         StringBuilder output = new StringBuilder();
         for(int trial = 0; trial < NUM_TESTS; trial++){
+            System.out.print("Starting Trial " + (trial + 1) + "\n");
             if(trial >= NUM_WARMUP){
                 output.append("-----------------------------------------\n");
                 output.append("Trial " + (trial - NUM_WARMUP + 1) + " Results: \n");
@@ -29,7 +31,7 @@ public class Experiment4 {
                 ArrayList<ExpCircularArrayFIFOQueue> lst = new ArrayList<>();
 
                 //instantiate all the cq's
-                for(int j = 1; j <= NUMBER_OF_QUEUES[i]; j++){
+                for(int j = -NUMBER_OF_QUEUES[i]/2; j <= NUMBER_OF_QUEUES[i]/2; j++){
                     ExpCircularArrayFIFOQueue<Integer> cq = new ExpCircularArrayFIFOQueue<>(5);
                     for(int elt = j; elt < j + 5; elt++){
                         cq.add(elt);
@@ -38,7 +40,7 @@ public class Experiment4 {
                 }
 
                 ChainingHashTable<ExpCircularArrayFIFOQueue<Integer>, Integer> hashTable =
-                        new ChainingHashTable<>(() -> new BinarySearchTree());
+                        new ChainingHashTable<>(() -> new AVLTree());
 
                 //start timer
                 long addStartTime = System.nanoTime();
@@ -64,6 +66,7 @@ public class Experiment4 {
                     output.append("\t\tFind Time: " + (findEndTime - findStartTime) / 1_000_000.0 + " ms\n");
                 }
             }
+            System.out.println("Finished Trial  " + (trial + 1) + "\n");
         }
 
         System.out.println(output);

@@ -134,7 +134,6 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
 
     private class ChainingHashTableIterator implements Iterator<Item<K, V>> {
         private int hashTableIndex = 0;
-        private int itemsSeen = 0;
         private Iterator<Item<K, V>> dictItr;
 
         public ChainingHashTableIterator() {

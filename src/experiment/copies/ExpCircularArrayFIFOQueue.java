@@ -152,7 +152,6 @@ public class ExpCircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSiz
         }
     }
 
-    /*
     @Override
     public int hashCode() {
         // You will implement this method in project 2. Leave this method unchanged for project 1.
@@ -166,13 +165,14 @@ public class ExpCircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSiz
         }
         return sum;
    }
-   */
 
-   //second hash function
-
+    /*
    @Override
    public int hashCode() {
-        return 1;
+        return Integer.signum(this.queue[head].hashCode());
    }
+
+     */
+
 
 }

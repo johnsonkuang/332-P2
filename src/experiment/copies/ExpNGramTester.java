@@ -40,6 +40,9 @@ public class ExpNGramTester {
     public static final int NUM_TESTS = 8;
     public static final int NUM_WARMUP = 3;
 
+    public static final String[] SAMPLE_NGRAMS = {"What a curious", "said Alice to", "a little of", "said Alice, rather",
+            "said the Cat", "Twinkle, twinkle, twinkle", "said the Hatter", "tone of great", "Queen of Hearts", "I'll have you"};
+
     public static void main(String[] args) {
         try {
             StringBuilder output = new StringBuilder();
@@ -53,7 +56,7 @@ public class ExpNGramTester {
                 for(int trial = 1; trial <= NUM_TESTS; trial++){
                     //start add time
 
-                    WordSuggestor suggestions;
+                    WordSuggestor suggestions = null;
                     //start time
                     long addStartTime = System.nanoTime();
                     switch (dict) {
@@ -80,20 +83,35 @@ public class ExpNGramTester {
                     //end time
                     long addEndTime = System.nanoTime();
                     //in milliseconds
-                    double addTime = (addEndTime - addStartTime) / 1_000_000.0;
+                    double addTime = (addEndTime - addStartTime);
 
                     if(trial > NUM_WARMUP){
                         output.append("\tTrial " + (trial - NUM_WARMUP) + ":\n");
-                        output.append("\t\tAdd Time: " + addTime + " ms\n");
+                        output.append("\t\tAdd Time: " + (addTime / 1_000_000.0) + " ms\n");
                         totalAddTime += addTime;
                     }
 
-                    //find component
+                    //find
 
+                    //measure the time it takes for each dictionary type to find the results for a pre-selected sample
+                    //of messages from Alice
+                    long findStartTime = System.nanoTime();
+                    for(String msg : SAMPLE_NGRAMS){
+                        suggestions.getAllSuggestions(msg);
+                    }
+                    long findEndTime = System.nanoTime();
+                    double findTime = (findEndTime - findStartTime);
+
+                    if(trial > NUM_WARMUP){
+                        output.append("\t\tFind Time: " + (findTime / 1_000_000.0) + " ms\n");
+                    }
                 }
             }
+            System.out.println(output);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }
