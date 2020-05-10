@@ -71,6 +71,9 @@ public class BSTvAVL {
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
 
+            // reset trial time
+            trialTime = 0;
+
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {
 
@@ -104,6 +107,8 @@ public class BSTvAVL {
         // run NUM_TESTS trials
         for(int n = 0; n < NUM_TESTS; n++) {
 
+            // reset trialTime
+            trialTime = 0;
 
             // insert values up to the current test Size
             for (int i = 0; i < testSize; i++) {
