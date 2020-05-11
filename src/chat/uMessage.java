@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.function.Supplier;
 
 import javax.swing.Box;
+
+import datastructures.dictionaries.AVLTree;
 import javafx.embed.swing.JFXPanel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,11 +35,11 @@ import p2.wordsuggestor.WordSuggestor;
 
 public class uMessage {
     private static int N = 3;
-    private static String CORPUS = "eggs.txt";
-    private static Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER = NGramTester
-            .trieConstructor(NGram.class);
-    private static Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER = NGramTester
-            .trieConstructor(AlphabeticString.class);
+    private static String CORPUS = "irc.corpus";
+    private static Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER =
+            NGramTester.hashtableConstructor(() -> new AVLTree());
+    private static Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER =
+            NGramTester.hashtableConstructor(() -> new AVLTree());
 
     /*
      *
