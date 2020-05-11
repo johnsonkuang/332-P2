@@ -35,7 +35,7 @@ import p2.wordsuggestor.WordSuggestor;
 
 public class uMessage {
     private static int N = 3;
-    private static String CORPUS = "spoken.corpus";
+    private static String CORPUS = "rushhour.corpus";
     private static Supplier<Dictionary<NGram, Dictionary<AlphabeticString, Integer>>> NEW_OUTER =
             NGramTester.hashtableConstructor(() -> new AVLTree());
     private static Supplier<Dictionary<AlphabeticString, Integer>> NEW_INNER =
