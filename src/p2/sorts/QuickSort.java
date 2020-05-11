@@ -58,7 +58,7 @@ public class QuickSort {
     private static <E> int medianOfThree(E[] array, Comparator<E> cmp, int lo, int hi) {
         E med1 = array[lo];
         E med2 = array[hi];
-        int mid = (hi+lo)/2;
+        int mid = lo + (hi-lo)/2;
         E med3 = array[mid];
         int cmp31 = Integer.signum(cmp.compare(med3, med1));
         int cmp32 = Integer.signum(cmp.compare(med3, med2));
