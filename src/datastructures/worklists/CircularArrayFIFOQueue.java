@@ -138,18 +138,7 @@ public class CircularArrayFIFOQueue<E extends Comparable<E>> extends FixedSizeFI
             if(this.size != other.size()) {
                 return false;
             }
-
-            // use iterator to get elements of other object
-            Iterator<E> otherIterator = other.iterator();
-            for(int i = 0; i < this.size; i++) {
-                // get the other object's next element
-                E otherElt = otherIterator.next();
-                // if any corresponding elements are different, return false
-                if(this.queue[(this.head + i) % capacity()].compareTo(otherElt) != 0) {
-                    return false;
-                }
-            }
-            return true;
+            return this.compareTo(other) == 0;
         }
     }
 
