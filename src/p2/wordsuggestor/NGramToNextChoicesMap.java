@@ -98,7 +98,7 @@ public class NGramToNextChoicesMap {
         String[] nextWords = new String[k < 0 ? afterNGrams.length : k];
         for (int l = 0; l < afterNGrams.length && l < nextWords.length
                 && afterNGrams[l] != null; l++) {
-            nextWords[k - l - 1] = afterNGrams[l].key;
+            nextWords[k < 0 ? l : k - l - 1] = afterNGrams[l].key;
         }
         return nextWords;
     }
