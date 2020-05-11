@@ -32,7 +32,7 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
 
     private AVLNode current;
 
-    public static int AVL_BALANCE = 1;
+    public static final int AVLBALANCE = 1;
 
     @Override
     public V insert(K key, V value) {
@@ -82,13 +82,13 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
         updateHeight(node);
 
         int balVal = getBalance(node);
-        if(balVal > AVL_BALANCE) {                        // go left first
+        if(balVal > AVLBALANCE) {                        // go left first
             int leftBalVal = getBalance(node.castChildrenToAVL(0));
             if(leftBalVal < 0) {                // left-right => double rot
                 node.children[0] = rotate(node.castChildrenToAVL(0), false);
             }                                   // rot for single and double rot
             node = rotate(node, true);
-        } else if(balVal < -AVL_BALANCE) {                // go right first
+        } else if(balVal < -AVLBALANCE) {                // go right first
             int rightBalVal = getBalance(node.castChildrenToAVL(1));
             if(rightBalVal > 0) {                // right-left => double rot
                 node.children[1] = rotate(node.castChildrenToAVL(1), true);
