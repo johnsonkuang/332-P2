@@ -3,8 +3,7 @@ package datastructures.dictionaries;
 import java.util.Iterator;
 import java.util.function.Supplier;
 
-import cse332.datastructures.containers.*;
-import cse332.exceptions.NotYetImplementedException;
+import cse332.datastructures.containers.Item;
 import cse332.interfaces.misc.DeletelessDictionary;
 import cse332.interfaces.misc.Dictionary;
 
@@ -30,7 +29,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
 
     private static final double GROWTH_RATIO_MAX = 0.8;
 
-    private static final int initSize = 61;
+    private static final int INIT_SIZE = 61;
     private static final int[] NEXT_PRIMES = {127, 251, 503, 1009, 2011, 4027, 8053, 16111, 32261,
             65003, 130099, 200003};
     private int nextPrimeIndex;
@@ -40,7 +39,7 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
     public ChainingHashTable(Supplier<Dictionary<K, V>> newChain) {
         this.newChain = newChain;
         nextPrimeIndex = 0;
-        hashTable = (Dictionary<K, V>[]) new Dictionary[initSize];
+        hashTable = (Dictionary<K, V>[]) new Dictionary[INIT_SIZE];
     }
 
     @Override
@@ -153,8 +152,9 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
 
         @Override
         public boolean hasNext() {
-            if(dictItr == null)
+            if(dictItr == null) {
                 return false;
+            }
             if(!dictItr.hasNext()) {
                 hashTableIndex++;
                 dictItr = getNextIterator();
