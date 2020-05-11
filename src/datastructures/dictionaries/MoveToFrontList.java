@@ -1,11 +1,10 @@
 package datastructures.dictionaries;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import cse332.datastructures.containers.*;
-import cse332.exceptions.NotYetImplementedException;
 import cse332.interfaces.misc.DeletelessDictionary;
-import cse332.interfaces.worklists.FixedSizeFIFOWorkList;
 
 /**
  * TODO: Replace this comment with your own as appropriate.
@@ -96,6 +95,9 @@ public class MoveToFrontList<K, V> extends DeletelessDictionary<K, V> {
 
         @Override
         public Item<K, V> next() {
+            if(curr == null){
+                throw new NoSuchElementException();
+            }
             Item<K, V> returnNode = new Item<>(curr.key, curr.value);
             curr = curr.next;
             return returnNode;
