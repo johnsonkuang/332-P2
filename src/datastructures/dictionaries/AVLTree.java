@@ -2,8 +2,6 @@ package datastructures.dictionaries;
 
 import cse332.datastructures.trees.BinarySearchTree;
 
-import java.lang.reflect.Array;
-
 /**
  * TODO: Replace this comment with your own as appropriate.
  *
@@ -33,10 +31,6 @@ import java.lang.reflect.Array;
 public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTree<K, V>  {
 
     private AVLNode current;
-
-    public AVLTree(){
-        super();
-    }
 
     @Override
     public V insert(K key, V value) {
@@ -85,14 +79,13 @@ public class AVLTree<K extends Comparable<? super K>, V> extends BinarySearchTre
     private AVLNode balanceTree(AVLNode node){
         updateHeight(node);
 
-        int balVal = getBalance(node);
-        if(balVal > 1) {                        // go left first
+        if(getBalance(node) > 1) {                        // go left first
             int leftBalVal = getBalance(node.castChildrenToAVL(0));
             if(leftBalVal < 0) {                // left-right => double rot
                 node.children[0] = rotate(node.castChildrenToAVL(0), false);
             }                                   // rot for single and double rot
             node = rotate(node, true);
-        } else if(balVal < -1) {                // go right first
+        } else if(getBalance(node) < -1) {                // go right first
             int rightBalVal = getBalance(node.castChildrenToAVL(1));
             if(rightBalVal > 0) {                // right-left => double rot
                 node.children[1] = rotate(node.castChildrenToAVL(1), true);
