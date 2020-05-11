@@ -93,15 +93,12 @@ public class NGramToNextChoicesMap {
         }
         else {
             TopKSort.sort(afterNGrams, k, comp.reversed());
-            for(int i = 0; i < (k - 1) / 2; i++){
-                Item<String, Integer> temp =
-            }
         }
 
         String[] nextWords = new String[k < 0 ? afterNGrams.length : k];
         for (int l = 0; l < afterNGrams.length && l < nextWords.length
                 && afterNGrams[l] != null; l++) {
-            nextWords[l] = afterNGrams[l].key;
+            nextWords[l] = afterNGrams[k < 0 ? l : k - l - 1].key;
         }
         return nextWords;
     }
